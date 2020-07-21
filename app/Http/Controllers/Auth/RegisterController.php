@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -50,8 +51,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'account_type_id' => ['required', 'numeric', Rule::in([1,2])],
+            'national_id' => ['required', 'string', 'max:30'],
+            'first_name' => ['required', 'string', 'max:191'],
+            'family_name' => ['required', 'string', 'max:191'],
+            'phone_number' => ['required', 'string', 'max:191'],
+            'address' => ['required', 'string', 'max:1000'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -65,7 +71,11 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'account_type_id' => $data['account_type_id'],
+            'first_name' => $data['first_name'],
+            'family_name' => $data['family_name'],
+            'phone_number' => $data['phone_number'],
+            'address' => $data['address'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
