@@ -1,28 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.authentication')
+
+@section('title')
+    Verify Email Address
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
+@if (session('resent'))
+    <div class="alert alert-success" role="alert">
+        {{ __('A fresh verification link has been sent to your email address.') }}
+    </div>
+@endif
+<div class="form-content mt-2">
+    <h1 class="">{{ __('Verify Your Email Address') }}</h1>
+    <p class="signup-link recovery">{{ __('Before proceeding, please check your email for a verification link.') }} {{ __('If you did not receive the email') }},</p>
+    <form class="text-left" action="{{ route('verification.resend') }}" method="POST">
+        @csrf
+        <div class="form">
+            <div class="d-sm-flex justify-content-between">
+                <div class="field-wrapper">
+                    <button type="submit" class="btn btn-primary">{{ __('click here to request another') }}</button>
                 </div>
             </div>
+
         </div>
-    </div>
+    </form>
+
 </div>
 @endsection

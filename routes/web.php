@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register/{user}', 'Auth/RegisterController@showRegistrationForm');
-Route::post('/register/{user}', 'Auth/RegisterController@register')->name('register');
+Route::get('/register/{user}', 'Auth\RegisterController@showRegistrationForm');
+Route::post('/register/{user}', 'Auth\RegisterController@register')->name('register');
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => false, 'verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
