@@ -109,6 +109,17 @@
                 <input id="password_confirmation" name="password_confirmation" type="password" class="form-control" placeholder="Password Confirmation" required>
             </div>
 
+            <div id="account-type-field" class="field-wrapper input mb-2">
+                <div class="d-flex justify-content-between">
+                    <label for="account-type">REGISTER AS</label>
+                </div>
+                <select class="custom-select" name="account_type_id">
+                    @foreach($account_type as $type)
+                        <option value="{{$type->id}}">{{$type->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <div class="d-sm-flex justify-content-between">
                 <div class="field-wrapper">
                     <button type="submit" class="btn btn-primary">Register Now</button>

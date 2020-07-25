@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="form-content">
-    <h1 class="text-capitalize">{{ $account_type_name }} Sign In</h1>
+    <h1 class="text-capitalize">Sign In</h1>
     <p class="">Log in to your account to continue.</p>
     
     <form method="POST" action="{{ route('login') }}" class="text-left">
@@ -48,7 +48,7 @@
                     <button type="submit" class="btn btn-primary" value="">{{ __('Login') }}</button>
                 </div>
             </div>
-            <p class="signup-link">Don't have an account ? <a href="{{url('register/'.$account_type_name)}}">Register as <span class="text-capitalize">{{ $account_type_name }}</span></a></p>
+            <p class="signup-link">Don't have an account ? <a href="{{url('register')}}">Register</span></a></p>
         </div>
     </form>
 

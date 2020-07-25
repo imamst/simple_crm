@@ -42,9 +42,9 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    public function showRegistrationForm($type)
+    public function showRegistrationForm()
     {
-        $account_type = \App\AccountType::where('name',$type)->first();
+        $account_type = \App\AccountType::select('id','name')->get();
         return view('auth.register', compact('account_type'));
 
     }
