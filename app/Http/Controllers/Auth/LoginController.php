@@ -37,4 +37,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function showLoginForm($type)
+    {
+        $account_type_name = \App\AccountType::where('name',$type)->first()->name;
+        return view('auth.login', compact('account_type_name'));
+    }
 }

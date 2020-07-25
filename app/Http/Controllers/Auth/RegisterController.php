@@ -42,6 +42,13 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm($type)
+    {
+        $account_type = \App\AccountType::where('name',$type)->first();
+        return view('auth.register', compact('account_type'));
+
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -72,6 +79,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'account_type_id' => $data['account_type_id'],
+            'national_id' => $data['national_id'],
             'first_name' => $data['first_name'],
             'family_name' => $data['family_name'],
             'phone_number' => $data['phone_number'],
