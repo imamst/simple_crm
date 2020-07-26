@@ -32,6 +32,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function accountType()
+    {
+        return $this->belongsTo('App\AccountType');
+    }
+
     public function agentContracts()
     {
         return $this->hasMany('App\Contract', 'agent_id');

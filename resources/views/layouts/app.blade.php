@@ -1,4 +1,3 @@
-@include('inc.function')
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -15,7 +14,17 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <!-- Styles -->
-    @include('inc.styles')  
+    <link href="{{asset('assets/css/loader.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/js/loader.js')}}"></script>
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/dashboard/dash_2.css')}}" rel="stylesheet" type="text/css" />
+
+    @yield('sytles')
 </head>
 <body>
     
@@ -48,7 +57,22 @@
     </div>
     <!-- END MAIN CONTAINER -->
 
-    @include('inc.scripts')
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
+    <script src="{{asset('bootstrap/js/popper.min.js')}}"></script>
+    <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 
+    <script src="{{asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{asset('assets/js/app.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            App.init();
+        });
+    </script>
+    <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
+    <script src="{{asset('plugins/highlight/highlight.pack.js')}}"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
+
+    @stack('scripts')
 </body>
 </html>

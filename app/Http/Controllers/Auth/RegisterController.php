@@ -46,7 +46,6 @@ class RegisterController extends Controller
     {
         $account_type = \App\AccountType::select('id','name')->get();
         return view('auth.register', compact('account_type'));
-
     }
 
     /**

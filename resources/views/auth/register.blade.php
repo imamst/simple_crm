@@ -7,11 +7,10 @@
 @section('content')
 <div class="form-content">
 
-    <h1 class="">Register as <span class="text-capitalize">{{ $account_type->name }}</span></h1>
-    <p class="signup-link register">Already have an account? <a href="{{url('login/'.$account_type->name)}}">Log in</a></p>
+    <h1 class="">Register</h1>
+    <p class="signup-link register">Already have an account? <a href="{{url('login')}}">Log in</a></p>
     <form class="text-left" action="{{route('register')}}" method="post">
         @csrf
-        <input type="hidden" name="account_type_id" value="{{ $account_type->id }}">
         <div class="form">
 
             <div id="national_id-field" class="field-wrapper input">
@@ -113,7 +112,7 @@
                 <div class="d-flex justify-content-between">
                     <label for="account-type">REGISTER AS</label>
                 </div>
-                <select class="custom-select" name="account_type_id">
+                <select class="form-control text-capitalize" name="account_type_id">
                     @foreach($account_type as $type)
                         <option value="{{$type->id}}">{{$type->name}}</option>
                     @endforeach

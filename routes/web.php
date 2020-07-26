@@ -21,8 +21,10 @@ Route::get('login', 'Auth\LoginController@showLoginForm');
 
 Auth::routes(['register' => false, 'verify' => true]);
 
-Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
-Route::post('/register', 'Auth\RegisterController@register')->name('register');
+Route::get('register', 'Auth\RegisterController@showRegistrationForm');
+Route::post('register', 'Auth\RegisterController@register')->name('register');
 
+Route::resource('contracts', 'ContractController')->middleware(['auth','agent']);
+Route::resource('tenants', 'TenantController')->middleware(['auth','landlord']);
 
-Route::get('/dashboard', 'HomeController@index')->name('home');
+Route::get('dashboard', 'HomeController@index')->name('home');

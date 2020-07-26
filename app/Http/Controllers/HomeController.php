@@ -24,8 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user_type = Auth::user()->account_type->name;
+        $user_type = Auth::user()->accountType->name;
+        $page_name = "Dashboard";
+        $category_name = "Dashboard";
 
-        return view($user_type.'/dashboard');
+        return view($user_type.'/dashboard', compact('page_name','category_name'));
     }
 }
