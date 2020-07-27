@@ -32,6 +32,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucwords($value);
+    }
+
+    public function setFamilyNameAttribute($value)
+    {
+        $this->attributes['family_name'] = ucwords($value);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->family_name}";
+    }
+
     public function accountType()
     {
         return $this->belongsTo('App\AccountType');

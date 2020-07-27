@@ -16,7 +16,7 @@ class RedirectIfNotAgent
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->accountType != 2){
+        if(Auth::user()->accountType->id != 2){
             abort(403);
         }
         return $next($request);

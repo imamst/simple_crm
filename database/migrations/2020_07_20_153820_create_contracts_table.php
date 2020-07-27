@@ -22,7 +22,7 @@ class CreateContractsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('payment_term');
-            $table->text('contract_file');
+            $table->text('contract_file')->nullable();
             $table->timestamps();
 
             $table->foreign('agent_id')->references('id')->on('users')->onDelete('cascade');

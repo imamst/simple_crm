@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Contract;
 
 class HomeController extends Controller
 {
@@ -24,10 +26,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user_type = Auth::user()->accountType->name;
-        $page_name = "Dashboard";
-        $category_name = "Dashboard";
+        $account_type_id = Auth::user()->accountType->id;
 
-        return view($user_type.'/dashboard', compact('page_name','category_name'));
+        if($account_type_id == 2){
+            $total_contracts = Contract::all()->count();
+            $recent_contracts = Contract::latest()->limit(5)->get();
+
+            return view('agent.dashboard', compact('total_contracts','recent_contracts'));
+        }
+        else {
+            return "landlord dashboard";
+        }
     }
 }

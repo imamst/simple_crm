@@ -21,10 +21,12 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
     <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/dashboard/dash_2.css')}}" rel="stylesheet" type="text/css" />
 
-    @yield('sytles')
+    <script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
+    @yield('styles')
 </head>
 <body>
     
@@ -58,7 +60,6 @@
     <!-- END MAIN CONTAINER -->
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
     <script src="{{asset('bootstrap/js/popper.min.js')}}"></script>
     <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 

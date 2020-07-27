@@ -18,11 +18,11 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <input id="national_id" name="national_id" type="text" class="form-control" placeholder="National ID" value="{{ old('national_id') ?? null }}" required>
 
-                {{-- @error('national_id') --}}
-                    <span class="invalid-feedback" role="alert">
-                        <strong>dhasdad</strong>
+                @error('national_id')
+                    <span class="invalid-feedback d-block">
+                        <strong>{{ $message }}</strong>
                     </span>
-                {{-- @enderror --}}
+                @enderror
             </div>
 
             <div id="firstname-field" class="field-wrapper input">
@@ -31,7 +31,7 @@
                 <input id="firstname" name="first_name" type="text" class="form-control" placeholder="First Name" value="{{ old('first_name') ?? null }}" required>
 
                 @error('first_name')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -43,7 +43,7 @@
                 <input id="family_name" name="family_name" type="text" class="form-control" placeholder="Family Name" value="{{ old('family_name') ?? null }}" required>
 
                 @error('family_name')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -55,7 +55,7 @@
                 <input id="phone_number" name="phone_number" type="text" class="form-control" placeholder="Phone Number" value="{{ old('phone_number') ?? null }}" required>
 
                 @error('phone_number')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -66,7 +66,7 @@
                 <textarea id="address" name="address" class="form-control" placeholder="Address" required>{{ old('address') ?? null }}</textarea>
 
                 @error('address')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -78,7 +78,7 @@
                 <input id="email" name="email" type="email" value="" class="form-control" placeholder="Email" value="{{ old('email') ?? null }}" required>
 
                 @error('email')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -94,7 +94,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
 
                 @error('password')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback d-block">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror

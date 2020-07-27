@@ -7,6 +7,7 @@
 @section('styles')
 <link href="{{asset('plugins/flatpickr/flatpickr.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('plugins/flatpickr/custom-flatpickr.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('plugins/file-upload/file-upload-with-preview.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -23,7 +24,7 @@
                 </div>
                 <div class="widget-content-area br-4">
                     <div class="widget-one">
-                        <form class="form-vertical" method="POST" action="{{route('contracts.update',$contract->id)}}">
+                        <form class="form-vertical" method="POST" action="{{route('contracts.update',$contract->id)}}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="_method" value="patch">
                         @include('contract.form')
@@ -39,9 +40,10 @@
 @push('scripts')
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <script src="{{asset('plugins/flatpickr/flatpickr.js')}}"></script>
+<script src="{{asset('plugins/file-upload/file-upload-with-preview.min.js')}}"></script>
 <script>
-    $(document).ready({
-        var f1 = flatpickr(document.getElementsByClassName('flatpickr-input'));
-    })
+    var f1 = flatpickr(document.getElementById('startDatepicker'));
+    var f2 = flatpickr(document.getElementById('endDatepicker'));
+    var contractUpload = new FileUploadWithPreview('contractFile');
 </script>
 @endpush
