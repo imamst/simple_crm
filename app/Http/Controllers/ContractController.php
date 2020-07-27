@@ -31,7 +31,7 @@ class ContractController extends Controller
     {
         $agent_id = Auth::id();
         $data = $request->validated();
-        $contract_path = $this->getUploadedPath($request);
+        $contract_path = $this->getContractUploadedPath($request);
 
         $new_contract = Contract::create([
             'agent_id' => Auth::id(),
@@ -68,7 +68,7 @@ class ContractController extends Controller
         if(isset($request->validated()['contract_file']))
         {
             Storage::delete($contract->contract_file);
-            $contract_path = $this->getUploadedPath($request);
+            $contract_path = $this->getContractUploadedPath($request);
         }
 
         $contract->update([

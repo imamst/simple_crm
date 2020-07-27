@@ -11,7 +11,7 @@ class Contract extends Model
 
     public function getInputDateAttribute()
     {
-        return $this->created_at->format('M d Y');
+        return $this->created_at->format('M d, Y');
     }
 
     public function getRentDurationNumberAttribute()

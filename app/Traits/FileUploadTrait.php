@@ -3,21 +3,36 @@
 namespace App\Traits;
 
 use App\Http\Requests\ContractFormRequest;
+use App\Http\Requests\TenantFormRequest;
 
 trait FileUploadTrait {
 
-    public function getUploadedPath(ContractFormRequest $request)
+    public function getContractUploadedPath(ContractFormRequest $request)
     {
-        $contract_path = null;
+        $path = null;
 
         if(isset($request->validated()['contract_file'])){
-            $contract = $request->validated()['contract_file'];
-            $ext = $contract->extension();
+            $file = $request->validated()['contract_file'];
+            $ext = $file->extension();
             $name = $request->contract_number.'-'.uniqid().'.'.$ext;
-            $contract_path = $contract->storeAs('uploads/contracts', $name);
+            $path = $file->storeAs('uploads/contracts', $name);
         }
 
-        return $contract_path;
+        return $path;
+    }
+
+    public function getPhotoUploadedPath(TenantFormRequest $request)
+    {
+        $path = null;
+
+        if(isset($request->validated()['photo'])){
+            $file = $request->validated()['photo'];
+            $ext = $file->extension();
+            $name = $request->first_name.'-'.uniqid().'.'.$ext;
+            $path = $file->storeAs('uploads/photos/', $name);
+        }
+
+        return $path;
     }
 
 }
