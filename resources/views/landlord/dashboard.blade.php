@@ -22,14 +22,14 @@
 
 @section('content')
 <div class="layout-px-spacing">
-    @if(session('success'))
-        <div class="alert alert-success mb-4" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-            {{session('success')}}</button>
-        </div> 
-    @endif
     <div class="row layout-top-spacing">
         <div class="col-lg-12 layout-spacing">
+            @if(session('success'))
+                <div class="alert alert-success mb-4" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                    {{session('success')}}</button>
+                </div> 
+            @endif
             <div class="statbox widget box box-shadow">
                 <div class="widget-header">
                     <div class="row">
@@ -50,6 +50,7 @@
                                     <th>Duration</th>
                                     <th>Period</th>
                                     <th>Payment Term</th>
+                                    <th>Status</th>
                                     <th class="">Contract File</th>
                                 </tr>
                             </thead>
@@ -58,7 +59,7 @@
                                     <tr>
                                         <td>{{ $contract->contract_number }}</td>
                                         <td class="text-center">
-                                            <a href="{{route('tenants.request',$contract->id)}}" data-toggle="tooltip" data-placement="top" title="Send Information Request to Tenant">
+                                            <a href="{{route('tenants.request', $contract->tenant->id)}}" data-toggle="tooltip" data-placement="top" title="Send Information Request to Tenant">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation text-success"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
                                             </a>
                                         </td>
@@ -67,6 +68,14 @@
                                         <td>{{ $contract->rent_duration }}</td>
                                         <td>{{ $contract->period }}</td>
                                         <td><span class="text-capitalize">{{ $contract->payment_term }}</span></td>
+                                        <td class="text-center">
+                                            @if($contract->tenant->first_name != null)
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                <span class="ml-2 text-success">Collected</span>
+                                            @else
+                                                <span>-</span>
+                                            @endif
+                                        </td>
                                         <td class="text-center">
                                             @if($contract->contract_file != null)
                                                 <a target="_blank" href="{{asset('storage/'.$contract->contract_file)}}"><span class="badge badge-success">Download</span></a>
@@ -131,7 +140,7 @@
                                 @foreach($recent_tenants as $tenant)
                                 <div class="item-timeline timeline-new">
                                     <div class="t-dot">
-                                        <div class="t-warning"><img src="{{asset('storage/img/90x90.jpg')}}"/></div>
+                                        <div style="background-image: url({{asset('storage/'.$tenant->photo)}}); background-size: cover; background-position: center"></div>
                                     </div>
                                     <div class="t-content">
                                         <div class="t-uppercontent">
@@ -141,7 +150,7 @@
                                         <p>Email: {{ $tenant->email }}</p>
                                         <p>Phone: {{ $tenant->phone_number }}</p>
                                         <div class="tags">
-                                            <div class="badge badge-success">{{ $tenant->contract->contract_number }}</div>
+                                            <div class="badge badge-success">Contract No. {{ $tenant->contract->contract_number }}</div>
                                         </div>
                                     </div>
                                 </div>

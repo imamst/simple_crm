@@ -9,15 +9,16 @@ use App\Contract;
 use App\Tenant;
 use App\Http\Requests\ContractFormRequest;
 use App\Traits\FileUploadTrait;
+use App\Traits\RandomStringTrait;
 
 class ContractController extends Controller
 {
 
-    use FileUploadTrait;
+    use FileUploadTrait, RandomStringTrait;
 
     public function index()
     {
-        $contracts = Contract::with(['landlord','tenant'])->get();
+        $contracts = Contract::with(['landlord','tenant'])->where('agent_id',Auth::id())->get();
 
         return view('contract.index', compact('contracts'));
     }
@@ -43,8 +44,11 @@ class ContractController extends Controller
             'contract_file' => $contract_path,
         ]);
 
+        $token = $this->generateToken(16);
+
         $new_contract->tenant()->create([
-            'email' => $data['tenant_email']
+            'email' => $data['tenant_email'],
+            'filling_form_token' => $token,
         ]);
 
         return redirect('contracts')->with(['success' => 'Contract data successfully added']);

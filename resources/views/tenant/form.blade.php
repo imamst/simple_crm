@@ -27,7 +27,7 @@
 <div id="email-field" class="field-wrapper input">
     <label for="email">EMAIL <span class="text-danger">*</span></label>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign register"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
-    <input id="email" name="email" type="email" class="form-control" placeholder="Email" value="{{ $tenant->email ?? old('email') ?? null }}" required disabled>
+    <input id="email" name="email" type="email" class="form-control" placeholder="Email" value="{{ $tenant->email ?? old('email') ?? null }}" required>
 </div>
 
 <div id="phone_number-field" class="field-wrapper input">
@@ -78,9 +78,9 @@
 </div>
 
 <div id="income-field" class="field-wrapper input">
-    <label for="income">INCOME <span class="text-danger">*</span></label>
+    <label for="income">INCOME / YEAR <span class="text-danger">*</span></label>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-    <input id="income" name="income" type="number" class="form-control" placeholder="0.00 (in SAR)" value="{{ $tenant->income ?? old('income') ?? null }}" required>
+    <input id="income" name="income" type="text" class="form-control" placeholder="in SAR" value="{{ $tenant->income ?? old('income') ?? null }}" required>
 
     @error('income')
         <span class="invalid-feedback d-block">
@@ -92,7 +92,7 @@
 <div id="photo-field" class="field-wrapper input custom-file-container" data-upload-id="photoFile">
     <label for="photo">UPLOAD PHOTO <span class="text-danger">*</span> <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear File">x</a></label>
     <label class="custom-file-container__custom-file">
-        <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*" name="photo">
+        <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*" name="photo" required>
         <input type="hidden" name="MAX_FILE_SIZE" value="5485760" />
         <span class="custom-file-container__custom-file__custom-file-control"></span>
     </label>

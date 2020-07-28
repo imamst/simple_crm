@@ -8,6 +8,11 @@ class Tenant extends Model
 {
     protected $guarded = ['id','created_at','updated_at'];
 
+    public function setIncomeAttribute($value)
+    {
+        $this->attributes['income'] = str_replace(',','',$value);
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->family_name}";

@@ -15,6 +15,7 @@
     <link href="{{asset('assets/css/authentication/form-2.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/switches.css')}}">
+    @yield('styles')
     <style>
         .form-form .form-form-wrap form .field-wrapper svg.feather-eye {
             top: 46px;
@@ -40,5 +41,7 @@
     <script src="{{asset('bootstrap/js/popper.min.js')}}"></script>
     <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/authentication/form-2.js')}}"></script>
+
+    @stack('scripts')
 </body>
 </html>

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm');
@@ -24,17 +24,21 @@ Auth::routes(['register' => false, 'verify' => true]);
 Route::get('register', 'Auth\RegisterController@showRegistrationForm');
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 
-Route::resource('contracts', 'ContractController', ['except' => ['show']])->middleware(['auth','agent']);
+Route::middleware(['auth','verified'])->group(function(){
 
-Route::prefix('tenants')->group(function () {
-    Route::middleware(['auth','landlord'])->group(function(){
-        Route::get('/', 'TenantController@index')->name('tenants.index');
-        Route::get('/{tenant}', 'TenantController@show')->name('tenants.show');
-        Route::patch('/{tenant}/reset', 'TenantController@resetData')->name('tenants.reset');
-        Route::get('/{tenant}/request', 'TenantController@sendRequest')->name('tenants.request');
+    Route::resource('contracts', 'ContractController', ['except' => ['show']])->middleware(['agent']);
+
+    Route::prefix('tenants')->group(function () {
+        Route::get('/{token}/edit', 'TenantController@edit')->name('tenants.edit');
+        Route::middleware(['landlord'])->group(function(){
+            Route::get('/', 'TenantController@index')->name('tenants.index');
+            Route::get('/{tenant}', 'TenantController@show')->name('tenants.show');
+            Route::patch('/{tenant}/reset', 'TenantController@reset')->name('tenants.reset');
+            Route::get('/{tenant}/request', 'TenantController@sendRequest')->name('tenants.request');
+        });
+        Route::patch('/{tenant}', 'TenantController@update')->name('tenants.update');
     });
-    Route::get('/{token}/edit', 'TenantController@edit')->name('tenants.edit');
-    Route::patch('/{tenant}', 'TenantController@update')->name('tenants.update');
-});
 
-Route::get('dashboard', 'HomeController@index')->name('home');
+    Route::get('dashboard', 'HomeController@index')->name('home');
+
+});

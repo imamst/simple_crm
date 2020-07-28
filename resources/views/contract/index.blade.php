@@ -12,12 +12,6 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/dt-global_style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/custom_dt_custom.css')}}">
-<style>
-    .table > tbody > tr > td {
-        color: #000;
-        font-weight: bold;
-    }
-</style>
 @endsection
 
 @section('content')

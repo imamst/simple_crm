@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\TenantFormRequest;
 use App\Traits\FileUploadTrait;
 use App\Tenant;
@@ -32,7 +33,7 @@ class TenantController extends Controller
 
     public function edit($token)
     {
-        $tenant = Tenant::where('token',$token)->first();
+        $tenant = Tenant::where('filling_form_token',$token)->first();
         return view('tenant.edit', compact('tenant','token'));
     }
 
@@ -40,6 +41,7 @@ class TenantController extends Controller
     {
         $data = $request->validated();
         $data['photo'] = $this->getPhotoUploadedPath($request);
+        $data['email'] = $tenant->email;
 
         $tenant->update($data);
 
@@ -61,11 +63,27 @@ class TenantController extends Controller
             'photo' => null,
         ]);
 
+        $tenant->contract->update(['landlord_id' => null]);
+
         return redirect('tenants')->with(['success' => 'Tenant\'s information successfully erased']);
     }
 
     public function sendRequest(Tenant $tenant)
     {
+        $landlord_id = Auth::id();
 
+        $to_name = "Tenant";
+        $to_email = $tenant->email;
+        $data = array("token" => $tenant->filling_form_token);
+            
+        Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
+            $message->to($to_email, $to_name)
+                    ->subject('[Tenant Information Request]');
+            // $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
+        });
+
+        $tenant->contract->update(['landlord_id' => $landlord_id]);
+
+        return redirect('dashboard')->with(['success' => 'Tenant information request successfully sent']);
     }
 }

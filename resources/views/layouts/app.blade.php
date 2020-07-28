@@ -27,8 +27,10 @@
 
     <script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
     @yield('styles')
+
+    <link href="{{asset('custom-css/style.css')}}" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body class="sidebar-noneoverflow" data-spy="scroll" data-target="#navSection" data-offset="140">
     
     <!-- BEGIN LOADER -->
     <div id="load_screen"> <div class="loader"> <div class="loader-content">

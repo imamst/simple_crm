@@ -43,22 +43,23 @@ class HomeController extends Controller
 
     public function getAgentDashboard(User $user)
     {
-        $total_contracts = $user->agentContract()->count();
-        $recent_contracts = $user->agentContract()->latest()->limit(5)->get();
+        $total_contracts = $user->agentContracts()->count();
+        $recent_contracts = $user->agentContracts()->latest()->limit(5)->get();
 
         return view('agent.dashboard', compact('total_contracts','recent_contracts'));
     }
 
     public function getLandlordDashboard(User $user)
     {
-        $contracts = Contract::with(['landlord','tenant'])->get();
+        $contracts = Contract::with(['landlord','tenant'])->whereNull('landlord_id')->orWhere('landlord_id',$user->id)->get();
         $landlord_contracts_id = $user->landlordContracts()->get()->pluck('id');
         $recent_tenants = Tenant::with(['contract'])
                                 ->whereIn('id', $landlord_contracts_id)
+                                ->whereNotNull('first_name')
                                 ->latest()
                                 ->limit(5)
                                 ->get();
-        $total_tenants = Tenant::whereIn('id', $landlord_contracts_id)->get()->count();
+        $total_tenants = Tenant::whereIn('id', $landlord_contracts_id)->whereNotNull('first_name')->get()->count();
 
         return view('landlord.dashboard', compact('contracts','recent_tenants','total_tenants'));
     }
