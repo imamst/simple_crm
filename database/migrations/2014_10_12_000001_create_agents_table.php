@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateAgentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('agents', function (Blueprint $table) {
             $table->bigIncrements('national_id');
+            $table->unsignedBigInteger('landlord_id');
             $table->string('first_name');
             $table->string('family_name');
             $table->string('phone_number');
@@ -24,6 +25,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            
+            $table->foreign('landlord_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -34,6 +38,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('agents');
     }
 }

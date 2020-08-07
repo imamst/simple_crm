@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Contract extends Model
 {
-    protected $guarded = ['id','created_at','updated_at'];
+    protected $guarded = [];
 
     public function getInputDateAttribute()
     {
@@ -38,7 +38,7 @@ class Contract extends Model
 
     public function agent()
     {
-        return $this->belongsTo('App\User', 'agent_id');
+        return $this->belongsTo('App\Agent');
     }
 
     public function landlord()

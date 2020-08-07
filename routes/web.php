@@ -19,12 +19,12 @@ Route::get('/', function () {
 
 Route::get('login', 'Auth\LoginController@showLoginForm');
 
-Auth::routes(['register' => false, 'verify' => true]);
+Auth::routes(['register' => false]);
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm');
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 
-Route::middleware(['auth','verified'])->group(function(){
+Route::middleware(['auth'])->group(function(){
 
     Route::resource('contracts', 'ContractController', ['except' => ['show']])->middleware(['agent']);
 

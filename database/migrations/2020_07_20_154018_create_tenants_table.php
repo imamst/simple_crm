@@ -14,7 +14,7 @@ class CreateTenantsTable extends Migration
     public function up()
     {
         Schema::create('tenants', function (Blueprint $table) {
-            $table->mediumIncrements('id');
+            $table->string('id');
             $table->string('first_name')->nullable();
             $table->string('family_name')->nullable();
             $table->string('email');
@@ -25,7 +25,7 @@ class CreateTenantsTable extends Migration
             $table->integer('income')->nullable();
             $table->text('photo')->nullable();
             $table->string('filling_form_token')->nullable();
-            $table->unsignedMediumInteger('contract_id');
+            $table->string('contract_id');
             $table->timestamps();
 
             $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');

@@ -6,13 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $guarded = [
-        'id', 'created_at', 'updated_at',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -47,17 +45,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return "{$this->first_name} {$this->family_name}";
     }
 
-    public function accountType()
+    public function agents()
     {
-        return $this->belongsTo('App\AccountType');
+        return $this->hasMany('App\Agent', 'landlord_id');
     }
 
-    public function agentContracts()
-    {
-        return $this->hasMany('App\Contract', 'agent_id');
-    }
-
-    public function landlordContracts()
+    public function contracts()
     {
         return $this->hasMany('App\Contract', 'landlord_id');
     }
