@@ -15,7 +15,7 @@ class CreateAgentsTable extends Migration
     {
         Schema::create('agents', function (Blueprint $table) {
             $table->bigIncrements('national_id');
-            $table->unsignedBigInteger('landlord_id');
+            $table->unsignedBigInteger('landlord_national_id');
             $table->string('first_name');
             $table->string('family_name');
             $table->string('phone_number');
@@ -26,8 +26,7 @@ class CreateAgentsTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            
-            $table->foreign('landlord_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('landlord_national_id')->references('national_id')->on('users')->onDelete('cascade');
         });
     }
 

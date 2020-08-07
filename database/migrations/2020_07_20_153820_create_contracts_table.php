@@ -14,9 +14,9 @@ class CreateContractsTable extends Migration
     public function up()
     {
         Schema::create('contracts', function (Blueprint $table) {
-            $table->string('id');
-            $table->unsignedBigInteger('agent_id');
-            $table->unsignedBigInteger('landlord_id')->nullable();
+            $table->uuid('id')->primary();
+            $table->unsignedBigInteger('agent_national_id');
+            $table->unsignedBigInteger('landlord_national_id')->nullable();
             $table->string('contract_number');
             $table->string('rent_duration');
             $table->date('start_date');
@@ -25,8 +25,8 @@ class CreateContractsTable extends Migration
             $table->text('contract_file')->nullable();
             $table->timestamps();
 
-            $table->foreign('agent_id')->references('id')->on('agents')->onDelete('cascade');
-            $table->foreign('landlord_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('agent_national_id')->references('national_id')->on('agents')->onDelete('cascade');
+            $table->foreign('landlord_national_id')->references('national_id')->on('users')->onDelete('cascade');
         });
     }
 
