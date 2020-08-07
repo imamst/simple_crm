@@ -26,15 +26,17 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm');
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 
 Route::middleware(['auth'])->group(function(){
+    Route::get('dashboard', 'LandlordHomeController')->name('home');
+    Route::resource('agents', 'AgentController');
+    Route::get('agents/{agent}/contracts', 'AgentContractsController')->name('agents.contracts.index');
     Route::prefix('tenants')->group(function () {
-    Route::get('/{token}/edit', 'TenantController@edit')->name('tenants.edit');
-    Route::get('/', 'TenantController@index')->name('tenants.index');
-    Route::get('/{tenant}', 'TenantController@show')->name('tenants.show');
-    Route::patch('/{tenant}/reset', 'TenantController@reset')->name('tenants.reset');
-    Route::get('/{tenant}/request', 'TenantController@sendRequest')->name('tenants.request');
-    Route::patch('/{tenant}', 'TenantController@update')->name('tenants.update');
+        Route::get('/{token}/edit', 'TenantController@edit')->name('tenants.edit');
+        Route::get('/', 'TenantController@index')->name('tenants.index');
+        Route::get('/{tenant}', 'TenantController@show')->name('tenants.show');
+        Route::patch('/{tenant}/reset', 'TenantController@reset')->name('tenants.reset');
+        Route::get('/{tenant}/request', 'TenantController@sendRequest')->name('tenants.request');
+        Route::patch('/{tenant}', 'TenantController@update')->name('tenants.update');
     });
-    Route::get('dashboard/landlord', 'LandlordHomeController')->name('home');
 });
 
 Route::middleware(['auth:agent'])->group(function(){

@@ -8,12 +8,31 @@
     @enderror
 </div>
 <div class="form-group mb-4">
-    <label class="control-label">Tenant's Email <span class="text-danger">*</span></label>
+    <label class="control-label">Customer First Name <span class="text-danger">*</span></label>
+    <input type="text" name="tenant_first_name" class="form-control" value="{{ $agent->first_name ?? old('first_name') ?? null }}" required>
+    @error('tenant_first_name')
+        <span class="invalid-feedback d-block">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+</div>
+
+<div class="form-group mb-4">
+    <label class="control-label">Customer Family Name <span class="text-danger">*</span></label>
+    <input type="text" name="tenant_family_name" class="form-control" value="{{ $agent->family_name ?? old('family_name') ?? null }}" required>
+    @error('tenant_family_name')
+        <span class="invalid-feedback d-block">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+</div>
+<div class="form-group mb-4">
+    <label class="control-label">Customer Email <span class="text-danger">*</span></label>
     <div class="input-group"> 
         <div class="input-group-prepend">
             <div class="input-group-text">@</div>
         </div>
-        <input type="text" name="tenant_email" class="form-control" value="{{ $contract->tenant->email ?? old('tenant_email') ?? null }}" required> 
+        <input type="email" name="tenant_email" class="form-control" value="{{ $contract->tenant->email ?? old('tenant_email') ?? null }}" required> 
     </div>
     @error('tenant_email')
         <span class="invalid-feedback d-block">

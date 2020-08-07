@@ -41,7 +41,6 @@ class TenantController extends Controller
     {
         $data = $request->validated();
         $data['photo'] = $this->getPhotoUploadedPath($request);
-        $data['email'] = $tenant->email;
 
         $tenant->update($data);
 
@@ -53,8 +52,6 @@ class TenantController extends Controller
         Storage::delete($tenant->photo);
 
         $tenant->update([
-            'first_name' => null,
-            'family_name' => null,
             'phone_number' => null,
             'address' => null,
             'profession' => null,
@@ -65,7 +62,7 @@ class TenantController extends Controller
 
         $tenant->contract->update(['landlord_national_id' => null]);
 
-        return redirect('tenants')->with(['success' => 'Tenant\'s information successfully erased']);
+        return redirect('tenants')->with(['success' => 'Customer information successfully erased']);
     }
 
     public function sendRequest(Tenant $tenant)
@@ -76,14 +73,14 @@ class TenantController extends Controller
         $to_email = $tenant->email;
         $data = array("token" => $tenant->filling_form_token);
             
-        Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
+        Mail::send('emails.data-request-mail', $data, function($message) use ($to_name, $to_email) {
             $message->to($to_email, $to_name)
-                    ->subject('[Tenant Information Request]');
+                    ->subject('[Customer Information Request]');
             // $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
         });
 
         $tenant->contract->update(['landlord_id' => $landlord_id]);
 
-        return redirect('dashboard')->with(['success' => 'Tenant information request successfully sent']);
+        return redirect('dashboard')->with(['success' => 'Customer information request successfully sent']);
     }
 }

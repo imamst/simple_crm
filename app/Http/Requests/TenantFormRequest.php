@@ -24,24 +24,18 @@ class TenantFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|string|max:191',
-            'family_name' => 'required|string|max:191',
-            'email' => 'required|email|max:191',
             'phone_number' => 'required|string|max:191',
             'address' => 'required|string',
             'profession' => 'required|string|max:191',
             'company' => 'required|string|max:191',
             'income' => 'required|string|max:191',
-            'photo' => 'file|mimes:jpeg,jpg,bmp,png,webp|max:5000',
+            'photo' => 'nullable|file|mimes:jpeg,jpg,bmp,png,webp|max:5000',
         ];
     }
 
     public function attributes()
     {
         return [
-            'first_name' => 'First Name',
-            'fiamily_name' => 'Family Name',
-            'email' => 'Email',
             'phone_number' => 'Phone Number',
             'address' => 'Address',
             'profession' => 'Profession',

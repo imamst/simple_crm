@@ -30,7 +30,6 @@ class ContractController extends Controller
 
     public function store(ContractFormRequest $request)
     {
-        $agent_id = Auth::id();
         $data = $request->validated();
         $contract_path = $this->getContractUploadedPath($request);
 
@@ -47,6 +46,8 @@ class ContractController extends Controller
         $token = $this->generateToken(16);
 
         $new_contract->tenant()->create([
+            'first_name' => $data['tenant_first_name'],
+            'family_name' => $data['tenant_family_name'],
             'email' => $data['tenant_email'],
             'filling_form_token' => $token,
         ]);
@@ -84,7 +85,11 @@ class ContractController extends Controller
             'contract_file' => $contract_path,
         ]);
 
-        $contract->tenant()->update(['email' => $data['tenant_email']]);
+        $contract->tenant()->update([
+            'first_name' => $data['tenant_first_name'],
+            'family_name' => $data['tenant_family_name'],
+            'email' => $data['tenant_email'],
+        ]);
 
         return redirect('contracts')->with(['success' => 'Contract data successfully updated']);
     }

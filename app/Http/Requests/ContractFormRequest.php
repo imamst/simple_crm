@@ -25,6 +25,9 @@ class ContractFormRequest extends FormRequest
     {
         return [
             'contract_number' => 'required|string|max:191',
+            'tenant_first_name' => 'required|string|max:191',
+            'tenant_family_name' => 'required|string|max:191',
+            'contract_number' => 'required|string|max:191',
             'tenant_email' => 'required|email|max:191',
             'rent_duration_number' => 'required|numeric',
             'rent_duration_period' => 'required|string',
@@ -39,7 +42,9 @@ class ContractFormRequest extends FormRequest
     {
         return [
             'contract_number' => 'Contract Number',
-            'tenant_email' => 'Tenant\'s Email',
+            'customer_first_name' => 'Customer First Name',
+            'customer_family_name' => 'Customer Family Name',
+            'tenant_email' => 'Tenant Email',
             'rent_duration_number' => 'Rent Duration',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',

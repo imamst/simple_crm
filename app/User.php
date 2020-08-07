@@ -44,12 +44,12 @@ class User extends Authenticatable
 
     public function getFullNameAttribute()
     {
-        return "{$this->first_name} {$this->family_name}";
+        return "{$this->first_name} bin {$this->family_name}";
     }
 
     public function agents()
     {
-        return $this->hasMany('App\Agent', 'landlord_national_id');
+        return $this->hasMany('App\Agent', 'landlord_national_id')->with(['contracts']);
     }
 
     public function contracts()
