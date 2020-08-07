@@ -33,7 +33,7 @@
                     <div class="w-content">
                         <div class="mb-4">
                             <p class="task-left">{{ $total_contracts }}</p>
-                            <p class="task-completed"><span>Total Contract</span> signed</p>
+                            <p class="task-completed"><span>Total Contract(s)</span> signed</p>
                         </div>
                         <a href="{{route('contracts.create')}}" class="btn btn-success">Input New Contract</a>
                     </div>
@@ -65,7 +65,7 @@
                                     </div>
                                     <p>Rent Duration: {{ $contract->rent_duration }}</p>
                                     <div class="tags">
-                                        <div class="badge badge-success"><a href="{{ asset($contract->contract_file) }}">Contract File</a></div>
+                                        <div class="badge badge-success"><a href="{{ asset('storage/'.$contract->contract_file) }}">Contract File</a></div>
                                     </div>
                                 </div>
                             </div>
