@@ -18,7 +18,7 @@ class ContractController extends Controller
 
     public function index()
     {
-        $contracts = Contract::with(['landlord','tenant'])->where('agent_id',Auth::id())->get();
+        $contracts = Contract::with(['landlord','tenant'])->where('agent_national_id',Auth::id())->get();
 
         return view('contract.index', compact('contracts'));
     }
@@ -35,7 +35,7 @@ class ContractController extends Controller
         $contract_path = $this->getContractUploadedPath($request);
 
         $new_contract = Contract::create([
-            'agent_id' => Auth::id(),
+            'agent_national_id' => Auth::id(),
             'contract_number' => $data['contract_number'],
             'rent_duration' => $data['rent_duration_number'].' '.$data['rent_duration_period'],
             'start_date' => $data['start_date'],

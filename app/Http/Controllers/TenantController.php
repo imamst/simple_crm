@@ -18,7 +18,7 @@ class TenantController extends Controller
     {
         $user = Auth::user();
 
-        $landlord_contracts_id = $user->landlordContracts()->get()->pluck('id');
+        $landlord_contracts_id = $user->contracts()->get()->pluck('id');
         $tenants = Tenant::with(['contract'])
                             ->whereIn('id', $landlord_contracts_id)
                             ->get();
@@ -63,7 +63,7 @@ class TenantController extends Controller
             'photo' => null,
         ]);
 
-        $tenant->contract->update(['landlord_id' => null]);
+        $tenant->contract->update(['landlord_national_id' => null]);
 
         return redirect('tenants')->with(['success' => 'Tenant\'s information successfully erased']);
     }

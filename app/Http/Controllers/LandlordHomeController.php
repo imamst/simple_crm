@@ -13,7 +13,7 @@ class LandlordHomeController extends Controller
     {
         $user = Auth::user();
 
-        $contracts = Contract::with(['landlord','tenant'])->whereNull('landlord_id')->orWhere('landlord_id',$user->id)->get();
+        $contracts = Contract::with(['landlord','tenant'])->whereNull('landlord_national_id')->orWhere('landlord_national_id',$user->national_id)->get();
 
         $landlord_contracts_id = $user->contracts()->get()->pluck('id');
 

@@ -43,7 +43,7 @@ class Contract extends Model
 
     public function landlord()
     {
-        return $this->belongsTo('App\User', 'landlord_id');
+        return $this->belongsTo('App\User', 'landlord_national_id');
     }
 
     public function tenant()

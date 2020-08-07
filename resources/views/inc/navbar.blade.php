@@ -27,7 +27,12 @@
                             <img src="{{asset('storage/img/90x90.jpg')}}" class="img-fluid mr-2" alt="avatar">
                             <div class="media-body">
                                 <h5>{{Auth::user()->full_name}}</h5>
-                                <p class="text-capitalize">{{Auth::user()->accountType->name}}</p>
+                                @auth('web')
+                                    <p class="text-capitalize">Landlord</p>
+                                @endauth
+                                @auth('agent')
+                                    <p class="text-capitalize">Agent</p>
+                                @endauth
                             </div>
                         </div>
                     </div>

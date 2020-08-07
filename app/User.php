@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $primaryKey = 'national_id';
+
     protected $guarded = [];
 
     /**
@@ -47,11 +49,11 @@ class User extends Authenticatable
 
     public function agents()
     {
-        return $this->hasMany('App\Agent', 'landlord_id');
+        return $this->hasMany('App\Agent', 'landlord_national_id');
     }
 
     public function contracts()
     {
-        return $this->hasMany('App\Contract', 'landlord_id');
+        return $this->hasMany('App\Contract', 'landlord_national_id');
     }
 }
