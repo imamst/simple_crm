@@ -16,7 +16,7 @@ class RedirectIfNotLandlord
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->accountType->id != 1){
+        if(Auth::check()){
             abort(403);
         }
         return $next($request);

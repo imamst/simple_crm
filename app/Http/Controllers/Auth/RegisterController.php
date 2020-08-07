@@ -44,8 +44,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $account_type = \App\AccountType::select('id','name')->get();
-        return view('auth.register', compact('account_type'));
+        return view('auth.register');
     }
 
     /**
@@ -57,7 +56,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'account_type_id' => ['required', 'numeric', Rule::in([1,2])],
             'national_id' => ['required', 'string', 'max:30'],
             'first_name' => ['required', 'string', 'max:191'],
             'family_name' => ['required', 'string', 'max:191'],
@@ -77,7 +75,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'account_type_id' => $data['account_type_id'],
             'national_id' => $data['national_id'],
             'first_name' => $data['first_name'],
             'family_name' => $data['family_name'],
