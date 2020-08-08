@@ -53,24 +53,28 @@
 
                     <div class="mt-container mx-auto">
                         <div class="timeline-line">
-                            @foreach($recent_contracts as $contract)
-                            <div class="item-timeline timeline-new">
-                                <div class="t-dot">
-                                    <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></div>
-                                </div>
-                                <div class="t-content">
-                                    <div class="t-uppercontent">
-                                        <h5>Contract No. {{ $contract->contract_number }}</h5>
-                                        <span class="">Created: {{ $contract->input_date }}</span>
+                            @if(count($recent_contracts)>0)
+                                @foreach($recent_contracts as $contract)
+                                <div class="item-timeline timeline-new">
+                                    <div class="t-dot">
+                                        <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></div>
                                     </div>
-                                    <p>Customer: {{ $contract->tenant->full_name }}</p>
-                                    <p>Rent Duration: {{ $contract->rent_duration }}</p>
-                                    <div class="tags">
-                                        <div class="badge badge-success"><a href="{{ asset('storage/'.$contract->contract_file) }}">Contract File</a></div>
+                                    <div class="t-content">
+                                        <div class="t-uppercontent">
+                                            <h5>Contract No. {{ $contract->contract_number }}</h5>
+                                            <span class="">Created: {{ $contract->input_date }}</span>
+                                        </div>
+                                        <p>Customer: {{ $contract->tenant->full_name }}</p>
+                                        <p>Rent Duration: {{ $contract->rent_duration }}</p>
+                                        <div class="tags">
+                                            <div class="badge badge-success"><a href="{{ asset('storage/'.$contract->contract_file) }}">Contract File</a></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            @endforeach                                
+                                @endforeach
+                            @else
+                                <p class="text-center">Records is empty</p>
+                            @endif
                         </div>                                    
                     </div>
 

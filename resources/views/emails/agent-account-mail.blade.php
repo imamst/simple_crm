@@ -1,4 +1,4 @@
-Dear {{$first_name.' bin '.$family_name}},
+Dear {{$first_name.' '.$family_name}},
 
 <p>Your account have been successfully created.</p>
 

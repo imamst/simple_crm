@@ -39,7 +39,7 @@ class AgentController extends Controller
             'password' => Hash::make($data['password'])
         ]);
 
-        $this->sendRequest($data);
+        $this->notifyAgent($data);
 
         return redirect('agents')->with(['success' => 'Agent account successfully created']);
     }
@@ -78,19 +78,17 @@ class AgentController extends Controller
         return redirect('agents')->with(['success' => 'Agent account successfully deleted']);
     }
 
-    public function sendRequest($data)
+    public function notifyAgent($data)
     {
-        return $data;
         $landlord_name = Auth::user()->full_name;
         $data = array_merge($data, ['landlord_name' => $landlord_name]);
 
-        $to_name = $data['first_name'].' bin '.$data['family_name'];
+        $to_name = $data['first_name'].' '.$data['family_name'];
         $to_email = $data['email'];
             
         Mail::send('emails.agent-account-mail', $data, function($message) use ($to_name, $to_email) {
             $message->to($to_email, $to_name)
                     ->subject('[Agent Account Created]');
-            // $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
         });
     }
 }

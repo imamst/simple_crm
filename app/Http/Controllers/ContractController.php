@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use App\Contract;
 use App\Tenant;
 use App\Http\Requests\ContractFormRequest;
@@ -53,6 +54,8 @@ class ContractController extends Controller
             'filling_form_token' => $token,
             'contract_id' => $new_contract->id,
         ]);
+
+        $this->sendNewContractNotification($data);
 
         return redirect('contracts')->with(['success' => 'Contract data successfully added']);
     }
@@ -103,5 +106,24 @@ class ContractController extends Controller
         $contract->delete();
 
         return redirect('contracts')->with(['success' => 'Contract data successfully deleted']);
+    }
+
+    public function sendNewContractNotification($data)
+    {
+        $agent = Auth::user();
+
+        $agent_name = $agent->full_name;
+        $data = array_merge($data, [
+            'agent_name' => $agent_name, 
+            'agent_email' => $agent->email
+        ]);
+
+        $to_name = $agent->landlord->full_name;
+        $to_email = $agent->landlord->email;
+            
+        Mail::send('emails.contract-signed-mail', $data, function($message) use ($to_name, $to_email) {
+            $message->to($to_email, $to_name)
+                    ->subject('[New Contract Signed]');
+        });
     }
 }

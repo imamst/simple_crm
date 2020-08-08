@@ -33,7 +33,7 @@ class TenantController extends Controller
 
     public function edit($token)
     {
-        $tenant = Tenant::where('filling_form_token',$token)->first();
+        $tenant = Tenant::where('filling_form_token',$token)->firstOrFail();
         return view('tenant.edit', compact('tenant','token'));
     }
 
@@ -46,25 +46,6 @@ class TenantController extends Controller
         $tenant->update($data);
 
         return view('tenant.thanks');
-    }
-
-    public function reset(Tenant $tenant)
-    {
-        Storage::delete($tenant->photo);
-
-        $tenant->update([
-            'phone_number' => null,
-            'address' => null,
-            'profession' => null,
-            'company' => null,
-            'income' => null,
-            'photo' => null,
-            'data_status' => 0,
-        ]);
-
-        $tenant->contract->update(['landlord_national_id' => null]);
-
-        return redirect('tenants')->with(['success' => 'Customer information successfully erased']);
     }
 
     public function sendRequest(Tenant $tenant)

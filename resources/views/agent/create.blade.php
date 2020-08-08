@@ -39,7 +39,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                                         </div>
                                     </div>
-                                    <input type="password" name="password" class="form-control" required>
+                                    <input id="password" type="password" name="password" class="form-control" required>
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -62,11 +62,6 @@
                                         </div>
                                     </div>
                                     <input type="password" name="password_confirmation" class="form-control" required>
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="d-sm-flex justify-content-between">
@@ -84,3 +79,19 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    var togglePassword = document.getElementById("toggle-password");
+    if (togglePassword) {
+        togglePassword.addEventListener('click', function() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        });
+    }
+</script>
+@endpush

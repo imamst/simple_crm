@@ -37,7 +37,6 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('tenants')->group(function () {
         Route::get('/', 'TenantController@index')->name('tenants.index');
         Route::get('/{tenant}', 'TenantController@show')->name('tenants.show');
-        Route::patch('/{tenant}/reset', 'TenantController@reset')->name('tenants.reset');
         Route::get('/{tenant}/request', 'TenantController@sendRequest')->name('tenants.request');
     });
 });
