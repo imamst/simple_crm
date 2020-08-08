@@ -18,7 +18,7 @@
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Input Contract Data</h4>
+                            <h2 class="p-3">Input Contract Data</h2>
                         </div>
                     </div>
                 </div>

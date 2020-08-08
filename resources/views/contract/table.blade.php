@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Contract no.</th>
-            @auth('web')
+            @auth('agent')
                 <th class="text-center">Action</th>
             @endauth
             <th>Customer Name</th>
@@ -18,7 +18,7 @@
         @foreach($contracts as $contract)
             <tr>
                 <td>{{ $contract->contract_number }}</td>
-                @auth('web')
+                @auth('agent')
                     <td class="text-center">
                         <div class="dropdown custom-dropdown">
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -43,7 +43,7 @@
                 @endauth
                 <td class="user-name">{{ $contract->tenant->full_name }}</td>
                 <td class="user-name">{{ $contract->tenant->email }}</td>
-                <td class="user-name">{{ $contract->landlord->full_name ?? '' }}</td>
+                <td class="user-name">{{ $contract->landlord->full_name }}</td>
                 <td>{{ $contract->rent_duration }}</td>
                 <td>{{ $contract->period }}</td>
                 <td><span class="text-capitalize">{{ $contract->payment_term }}</span></td>

@@ -3,10 +3,35 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Tenant extends Model
 {
     protected $guarded = [];
+    
+    protected static function boot() {
+        parent::boot();
+ 
+        //Generate and set UUID automatically for the user
+        static::creating(function($user) {
+            $user->id = uniqid('cst',true);
+        });
+    }
+
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
+
+    protected function setIdAttribute($value)
+    {
+        $this->attributes['id'] = preg_replace('/\./', '', uniqid('srm', true));
+    }
 
     public function setIncomeAttribute($value)
     {

@@ -1,7 +1,7 @@
 @extends('layouts.authentication')
 
 @section('title')
-    Tenant's Information Form
+    Customer Information Form
 @endsection
 
 @section('styles')
@@ -13,7 +13,7 @@
 @section('content')
 <div class="form-content">
 
-    <h1 class="">Tenant's Information Form</h1>
+    <h1 class="">Customer Information Form</h1>
     <form class="text-left" action="{{route('tenants.update', $tenant->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('patch')

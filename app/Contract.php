@@ -3,11 +3,36 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class Contract extends Model
 {
     protected $guarded = [];
+
+    protected static function boot() {
+        parent::boot();
+ 
+        //Generate and set UUID automatically for the user
+        static::creating(function($user) {
+            $user->id = uniqid('cnt',true);
+        });
+    }
+
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
+
+    protected function setIdAttribute($value)
+    {
+        $this->attributes['id'] = preg_replace('/\./', '', uniqid('srm', true));
+    }
 
     public function getInputDateAttribute()
     {
@@ -38,7 +63,7 @@ class Contract extends Model
 
     public function agent()
     {
-        return $this->belongsTo('App\Agent');
+        return $this->belongsTo('App\Agent', 'agent_national_id');
     }
 
     public function landlord()

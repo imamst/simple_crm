@@ -10,6 +10,6 @@ class AgentContractsController extends Controller
     {
         $contracts = $agent->contracts()->get();
 
-        return view('agent.contract', compact('contracts', 'agent'));
+        return view('agent.contract.index', compact('contracts', 'agent'));
     }
 }

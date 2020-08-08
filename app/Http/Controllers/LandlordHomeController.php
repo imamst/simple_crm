@@ -13,18 +13,18 @@ class LandlordHomeController extends Controller
     {
         $landlord = Auth::user();
 
-        $contracts = Contract::with(['landlord','tenant'])->whereNull('landlord_national_id')->orWhere('landlord_national_id', $landlord->national_id)->get();
+        $contracts = $landlord->contracts()->with(['agent','tenant'])->get();
 
         $landlord_contracts_id = $landlord->contracts()->get()->pluck('id');
 
         $recent_tenants = Tenant::with(['contract'])
-                                ->whereIn('id', $landlord_contracts_id)
-                                ->whereNotNull('income')
+                                ->whereIn('contract_id', $landlord_contracts_id)
+                                ->where('data_status',2)
                                 ->latest()
                                 ->limit(5)
                                 ->get();
 
-        $total_tenants = Tenant::whereIn('id', $landlord_contracts_id)->whereNotNull('income')->get()->count();
+        $total_tenants = Tenant::whereIn('contract_id', $landlord_contracts_id)->where('data_status',2)->get()->count();
 
         return view('landlord.dashboard', compact('contracts','recent_tenants','total_tenants'));
     }

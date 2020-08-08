@@ -35,6 +35,7 @@ class ContractController extends Controller
 
         $new_contract = Contract::create([
             'agent_national_id' => Auth::id(),
+            'landlord_national_id' => Auth::user()->landlord_national_id,
             'contract_number' => $data['contract_number'],
             'rent_duration' => $data['rent_duration_number'].' '.$data['rent_duration_period'],
             'start_date' => $data['start_date'],
@@ -50,6 +51,7 @@ class ContractController extends Controller
             'family_name' => $data['tenant_family_name'],
             'email' => $data['tenant_email'],
             'filling_form_token' => $token,
+            'contract_id' => $new_contract->id,
         ]);
 
         return redirect('contracts')->with(['success' => 'Contract data successfully added']);

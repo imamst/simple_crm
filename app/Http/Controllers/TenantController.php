@@ -20,7 +20,7 @@ class TenantController extends Controller
 
         $landlord_contracts_id = $user->contracts()->get()->pluck('id');
         $tenants = Tenant::with(['contract'])
-                            ->whereIn('id', $landlord_contracts_id)
+                            ->whereIn('contract_id', $landlord_contracts_id)
                             ->get();
         
         return view('tenant.index', compact('tenants'));
@@ -41,6 +41,7 @@ class TenantController extends Controller
     {
         $data = $request->validated();
         $data['photo'] = $this->getPhotoUploadedPath($request);
+        $data = array_merge($data, ['data_status' => 2]);
 
         $tenant->update($data);
 
@@ -58,6 +59,7 @@ class TenantController extends Controller
             'company' => null,
             'income' => null,
             'photo' => null,
+            'data_status' => 0,
         ]);
 
         $tenant->contract->update(['landlord_national_id' => null]);
@@ -79,7 +81,7 @@ class TenantController extends Controller
             // $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
         });
 
-        $tenant->contract->update(['landlord_id' => $landlord_id]);
+        $tenant->update(['data_status' => 1]);
 
         return redirect('dashboard')->with(['success' => 'Customer information request successfully sent']);
     }

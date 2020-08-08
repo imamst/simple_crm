@@ -28,20 +28,20 @@ class AgentController extends Controller
     {
         $data = $request->validated();
 
-        // Agent::create([
-        //     'national_id' => $data['national_id'],
-        //     'landlord_national_id' => Auth::id(),
-        //     'first_name' => $data['first_name'],
-        //     'family_name' => $data['family_name'],
-        //     'phone_number' => $data['phone_number'],
-        //     'address' => $data['address'],
-        //     'email' => $data['email'],
-        //     'password' => Hash::make($data['password'])
-        // ]);
+        Agent::create([
+            'national_id' => $data['national_id'],
+            'landlord_national_id' => Auth::id(),
+            'first_name' => $data['first_name'],
+            'family_name' => $data['family_name'],
+            'phone_number' => $data['phone_number'],
+            'address' => $data['address'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password'])
+        ]);
 
         $this->sendRequest($data);
 
-        // return redirect('agents')->with(['success' => 'Agent account successfully created']);
+        return redirect('agents')->with(['success' => 'Agent account successfully created']);
     }
 
     public function show(Agent $agent)
@@ -61,14 +61,11 @@ class AgentController extends Controller
         $data = $request->validated();
 
         $agent->update([
-            'national_id' => $data['national_id'],
-            'landlord_national_id' => Auth::id(),
             'first_name' => $data['first_name'],
             'family_name' => $data['family_name'],
             'phone_number' => $data['phone_number'],
             'address' => $data['address'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password'])
         ]);
 
         return redirect('agents')->with(['success' => 'Agent account successfully updated']);

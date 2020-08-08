@@ -9,7 +9,7 @@
 </div>
 <div class="form-group mb-4">
     <label class="control-label">Customer First Name <span class="text-danger">*</span></label>
-    <input type="text" name="tenant_first_name" class="form-control" value="{{ $agent->first_name ?? old('first_name') ?? null }}" required>
+    <input type="text" name="tenant_first_name" class="form-control" value="{{ $contract->tenant->first_name ?? old('first_name') ?? null }}" required>
     @error('tenant_first_name')
         <span class="invalid-feedback d-block">
             <strong>{{ $message }}</strong>
@@ -19,7 +19,7 @@
 
 <div class="form-group mb-4">
     <label class="control-label">Customer Family Name <span class="text-danger">*</span></label>
-    <input type="text" name="tenant_family_name" class="form-control" value="{{ $agent->family_name ?? old('family_name') ?? null }}" required>
+    <input type="text" name="tenant_family_name" class="form-control" value="{{ $contract->tenant->family_name ?? old('family_name') ?? null }}" required>
     @error('tenant_family_name')
         <span class="invalid-feedback d-block">
             <strong>{{ $message }}</strong>

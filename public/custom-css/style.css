@@ -6,3 +6,8 @@
 .user-profile .widget-content-area .user-info-list ul.contacts-block {
     max-width: 270px;
 }
+
+.form-group label, label {
+    color: #000;
+    font-weight: bold;
+}

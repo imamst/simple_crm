@@ -45,7 +45,7 @@
                                 <tr>
                                     <th>Contract no.</th>
                                     <th class="text-center">Action</th>
-                                    <th>Tenant Email</th>
+                                    <th>Customer Email</th>
                                     <th>Agent</th>
                                     <th>Duration</th>
                                     <th>Period</th>
@@ -59,7 +59,7 @@
                                     <tr>
                                         <td>{{ $contract->contract_number }}</td>
                                         <td class="text-center">
-                                            <a href="{{route('tenants.request', $contract->tenant->id)}}" data-toggle="tooltip" data-placement="top" title="Send Information Request to Tenant">
+                                            <a href="{{route('tenants.request', $contract->tenant->id)}}" data-toggle="tooltip" data-placement="top" title="Send Information Request to Customer">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation text-success"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
                                             </a>
                                         </td>
@@ -69,9 +69,12 @@
                                         <td>{{ $contract->period }}</td>
                                         <td><span class="text-capitalize">{{ $contract->payment_term }}</span></td>
                                         <td class="text-center">
-                                            @if($contract->tenant->first_name != null)
+                                            @if($contract->tenant->data_status == 2)
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                 <span class="ml-2 text-success">Collected</span>
+                                            @elseif($contract->tenant->data_status == 1)
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation text-warning"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                                            <span class="ml-2 text-warning">Request Sent</span>
                                             @else
                                                 <span>-</span>
                                             @endif
@@ -98,7 +101,7 @@
                 <div class="widget-content">
                     <div class="header">
                         <div class="header-body">
-                            <h6>Tenant Information Statistics</h6>
+                            <h6>Customer Information Statistics</h6>
                             <p class="meta-date">Until {{ date("M Y") }}</p>
                         </div>
                         <div class="task-action">
@@ -117,7 +120,7 @@
                     <div class="w-content">
                         <div class="mb-4">
                             <p class="task-left">{{ $total_tenants }}</p>
-                            <p class="task-completed"><span>Total Tenant information</span> collected</p>
+                            <p class="task-completed"><span>Total Customer information</span> collected</p>
                         </div>
                     </div>
                 </div>
@@ -129,7 +132,7 @@
             <div class="widget widget-activity-three widget-activity-four">
 
                 <div class="widget-heading">
-                    <h5>Recent Collected Tenant Information</h5>
+                    <h5>Recent Collected Customer Information</h5>
                 </div>
 
                 <div class="widget-content">
@@ -140,7 +143,10 @@
                                 @foreach($recent_tenants as $tenant)
                                 <div class="item-timeline timeline-new">
                                     <div class="t-dot">
-                                        <div style="background-image: url({{asset('storage/'.$tenant->photo)}}); background-size: cover; background-position: center"></div>
+                                        {{-- <div style="background-image: url({{asset('storage/'.$tenant->photo)}}); background-size: cover; background-position: center"></div> --}}
+                                        <div class="t-warning">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        </div>
                                     </div>
                                     <div class="t-content">
                                         <div class="t-uppercontent">

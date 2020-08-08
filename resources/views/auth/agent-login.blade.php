@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="form-content">
-    <h1 class="text-capitalize">Sign In</h1>
+    <h1 class="text-capitalize">Agent Sign In</h1>
     <p class="">Log in to your account to continue.</p>
     
     @if(session('error'))
@@ -20,7 +20,9 @@
     <form method="POST" action="{{ route('login.agent') }}" class="text-left">
         @csrf
 
-        @include('auth.login-form')
+        <div class="form">
+            @include('auth.login-form')
+        </div>
     </form>
 
 </div>

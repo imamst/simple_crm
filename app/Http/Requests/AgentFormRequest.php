@@ -23,8 +23,19 @@ class AgentFormRequest extends FormRequest
      */
     public function rules()
     {
+        if($this->method() == 'PATCH')
+        {
+            return [
+                'first_name' => ['required', 'string', 'max:191'],
+                'family_name' => ['required', 'string', 'max:191'],
+                'phone_number' => ['required', 'string', 'max:191'],
+                'address' => ['required', 'string', 'max:1000'],
+                'email' => ['required', 'string', 'email', 'max:191'],
+            ];
+        }
+
         return [
-            'national_id' => ['required', 'string', 'max:191'],
+            'national_id' => ['required', 'string', 'max:191', 'unique:agents'],
             'first_name' => ['required', 'string', 'max:191'],
             'family_name' => ['required', 'string', 'max:191'],
             'phone_number' => ['required', 'string', 'max:191'],

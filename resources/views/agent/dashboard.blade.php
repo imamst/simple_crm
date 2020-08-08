@@ -63,6 +63,7 @@
                                         <h5>Contract No. {{ $contract->contract_number }}</h5>
                                         <span class="">Created: {{ $contract->input_date }}</span>
                                     </div>
+                                    <p>Customer: {{ $contract->tenant->full_name }}</p>
                                     <p>Rent Duration: {{ $contract->rent_duration }}</p>
                                     <div class="tags">
                                         <div class="badge badge-success"><a href="{{ asset('storage/'.$contract->contract_file) }}">Contract File</a></div>

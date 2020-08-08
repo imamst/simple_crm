@@ -13,7 +13,10 @@
     <form method="POST" action="{{ route('login') }}" class="text-left">
         @csrf
 
-        @include('auth.login-form')
+        <div class="form">
+            @include('auth.login-form')
+            <p class="signup-link">Don't have an account ? <a href="{{url('register')}}">Register</span></a></p>
+        </div>
     </form>
 
 </div>
