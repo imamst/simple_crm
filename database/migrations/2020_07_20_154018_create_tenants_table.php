@@ -25,7 +25,7 @@ class CreateTenantsTable extends Migration
             $table->integer('income')->nullable();
             $table->text('photo')->nullable();
             $table->string('filling_form_token')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('data_status')->default(0);
             $table->char('contract_id', 36);
             $table->timestamps();
 
