@@ -14,6 +14,11 @@ class AgentLoginController extends LoginController
         $this->middleware('guest:agent')->except('logout');
     }
 
+    protected function authenticated(Request $request, $agent)
+    {
+        return view('auth.loggedin');
+    }
+
     public function showLoginForm()
     {
         return view('auth.agent-login');
