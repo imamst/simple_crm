@@ -31,7 +31,7 @@ Route::prefix('tenants')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('dashboard', 'LandlordHomeController')->name('home');
+    Route::get('/dashboard', 'LandlordHomeController')->name('home');
     Route::resource('agents', 'AgentController');
     Route::get('agents/{agent}/contracts', 'AgentContractsController')->name('agents.contracts.index');
     Route::prefix('tenants')->group(function () {
@@ -42,6 +42,6 @@ Route::middleware(['auth'])->group(function(){
 });
 
 Route::middleware(['auth:agent'])->group(function(){
-    Route::get('dashboard/agent', 'AgentHomeController')->name('home.agent');
+    Route::get('/dashboard/agent', 'AgentHomeController')->name('home.agent');
     Route::resource('contracts', 'ContractController', ['except' => ['show']]);
 });

@@ -3,10 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 31, 2020 at 03:07 PM
+-- Generation Time: Aug 08, 2020 at 03:06 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -25,23 +26,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account_types`
+-- Table structure for table `agents`
 --
 
-CREATE TABLE `account_types` (
-  `id` tinyint(3) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+CREATE TABLE `agents` (
+  `national_id` bigint(20) UNSIGNED NOT NULL,
+  `landlord_national_id` bigint(20) UNSIGNED NOT NULL,
+  `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `family_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `account_types`
---
-
-INSERT INTO `account_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'landlord', NULL, NULL),
-(2, 'agent', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -50,9 +51,9 @@ INSERT INTO `account_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `contracts` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
-  `agent_id` smallint(5) UNSIGNED NOT NULL,
-  `landlord_id` smallint(5) UNSIGNED DEFAULT NULL,
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `agent_national_id` bigint(20) UNSIGNED NOT NULL,
+  `landlord_national_id` bigint(20) UNSIGNED DEFAULT NULL,
   `contract_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rent_duration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_date` date NOT NULL,
@@ -62,14 +63,6 @@ CREATE TABLE `contracts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `contracts`
---
-
-INSERT INTO `contracts` (`id`, `agent_id`, `landlord_id`, `contract_number`, `rent_duration`, `start_date`, `end_date`, `payment_term`, `contract_file`, `created_at`, `updated_at`) VALUES
-(2, 1, NULL, '234543', '4 month(s)', '2020-07-01', '2020-07-31', 'monthly', 'uploads/contracts/234543-5f1e68030fe1a.pdf', '2020-07-26 21:48:07', '2020-07-28 00:26:29'),
-(4, 3, 4, '4835784564', '5 month(s)', '2020-07-01', '2020-07-31', 'monthly', 'uploads/contracts/4835784564-5f1fff3d3e7aa.pdf', '2020-07-28 03:34:37', '2020-07-28 03:46:45');
 
 -- --------------------------------------------------------
 
@@ -98,18 +91,6 @@ CREATE TABLE `migrations` (
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_07_21_131648_create_account_types_table', 1),
-(2, '2014_10_12_000000_create_users_table', 1),
-(3, '2014_10_12_100000_create_password_resets_table', 1),
-(4, '2019_08_19_000000_create_failed_jobs_table', 1),
-(5, '2020_07_20_153820_create_contracts_table', 1),
-(6, '2020_07_20_154018_create_tenants_table', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -129,7 +110,7 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `tenants` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `family_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -140,18 +121,11 @@ CREATE TABLE `tenants` (
   `income` int(11) DEFAULT NULL,
   `photo` text COLLATE utf8mb4_unicode_ci,
   `filling_form_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `contract_id` mediumint(8) UNSIGNED NOT NULL,
+  `data_status` tinyint(4) NOT NULL DEFAULT '0',
+  `contract_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tenants`
---
-
-INSERT INTO `tenants` (`id`, `first_name`, `family_name`, `email`, `phone_number`, `address`, `profession`, `company`, `income`, `photo`, `filling_form_token`, `contract_id`, `created_at`, `updated_at`) VALUES
-(2, NULL, NULL, 's.imam29@student.uns.ac.id', NULL, NULL, NULL, NULL, NULL, NULL, '09wmojy3hav3l0q5', 2, '2020-07-26 21:48:07', '2020-07-28 00:26:29'),
-(4, 'Setiawan', 'Imam', 'onestia96@gmail.com', '082242510043', 'Wungusari RT 16, Tegaldowo Gemolong Sragen 57274', 'Freelancer', 'Qways', 4500, 'uploads/photos//Setiawan-5f200c2f7e335.jpeg', '2f8a887302721998836f84c28adaae5e', 4, '2020-07-28 03:34:37', '2020-07-28 04:29:51');
 
 -- --------------------------------------------------------
 
@@ -160,9 +134,7 @@ INSERT INTO `tenants` (`id`, `first_name`, `family_name`, `email`, `phone_number
 --
 
 CREATE TABLE `users` (
-  `id` smallint(5) UNSIGNED NOT NULL,
-  `account_type_id` tinyint(3) UNSIGNED NOT NULL,
-  `national_id` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `national_id` bigint(20) UNSIGNED NOT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `family_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -176,32 +148,24 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `account_type_id`, `national_id`, `first_name`, `family_name`, `phone_number`, `address`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 2, '2434', 'dasdk', 'hdkadhk', '43545', 'dadskan', 'dsnaskdand@dnasj.cmd', NULL, '$2y$10$sBqEqdChpLRdK59Jh4o1wul9fN7AmnKWE.mKB9KtgC8dUwZoDPTyi', NULL, '2020-07-23 08:23:27', '2020-07-23 08:23:27'),
-(2, 1, '87395473', 'Imam', 'Setiawan', '082242510043', 'Wungusari RT 16, Tegaldowo Gemolong Sragen 57274', 's.imam29@student.uns.ac.id', NULL, '$2y$10$asHHWnArk/5Z7V/2qAi.iODvwJoODfw1GbREw06/6K.lIe9T8zcS6', NULL, '2020-07-27 07:52:31', '2020-07-27 07:52:31'),
-(3, 2, '32435465546', 'Imam', 'Setiawan', '082242510043', 'Wungusari RT 16, Tegaldowo Gemolong Sragen 57274', 'onestia96@gmail.com', '2020-07-28 03:14:53', '$2y$10$ZgntxMAhMJBR5lO2PcK5yujZRtbV2AYmTPsYvnRsq8ZZ/YXi2/EYi', NULL, '2020-07-28 03:13:11', '2020-07-28 03:14:53'),
-(4, 1, '8476495', 'Imam', 'Setiawan', '082242510043', 'Wungusari RT 16, Tegaldowo Gemolong Sragen 57274', 'imamset.business@gmail.com', '2020-07-28 03:46:15', '$2y$10$pKFXC6tOdjRHeu6j88fWpeFQfejWRpiY8532YOwq0uyDuRxMNAlPK', NULL, '2020-07-28 03:45:17', '2020-07-28 03:46:15');
-
---
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `account_types`
+-- Indexes for table `agents`
 --
-ALTER TABLE `account_types`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `agents`
+  ADD PRIMARY KEY (`national_id`),
+  ADD UNIQUE KEY `agents_email_unique` (`email`),
+  ADD KEY `agents_landlord_national_id_foreign` (`landlord_national_id`);
 
 --
 -- Indexes for table `contracts`
 --
 ALTER TABLE `contracts`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `contracts_agent_id_foreign` (`agent_id`),
-  ADD KEY `contracts_landlord_id_foreign` (`landlord_id`);
+  ADD KEY `contracts_agent_national_id_foreign` (`agent_national_id`),
+  ADD KEY `contracts_landlord_national_id_foreign` (`landlord_national_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -232,25 +196,18 @@ ALTER TABLE `tenants`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD KEY `users_account_type_id_foreign` (`account_type_id`);
+  ADD PRIMARY KEY (`national_id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `account_types`
+-- AUTO_INCREMENT for table `agents`
 --
-ALTER TABLE `account_types`
-  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `contracts`
---
-ALTER TABLE `contracts`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `agents`
+  MODIFY `national_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -262,42 +219,37 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `tenants`
---
-ALTER TABLE `tenants`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `national_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `agents`
+--
+ALTER TABLE `agents`
+  ADD CONSTRAINT `agents_landlord_national_id_foreign` FOREIGN KEY (`landlord_national_id`) REFERENCES `users` (`national_id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `contracts`
 --
 ALTER TABLE `contracts`
-  ADD CONSTRAINT `contracts_agent_id_foreign` FOREIGN KEY (`agent_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `contracts_landlord_id_foreign` FOREIGN KEY (`landlord_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `contracts_agent_national_id_foreign` FOREIGN KEY (`agent_national_id`) REFERENCES `agents` (`national_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `contracts_landlord_national_id_foreign` FOREIGN KEY (`landlord_national_id`) REFERENCES `users` (`national_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `tenants`
 --
 ALTER TABLE `tenants`
   ADD CONSTRAINT `tenants_contract_id_foreign` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_account_type_id_foreign` FOREIGN KEY (`account_type_id`) REFERENCES `account_types` (`id`) ON DELETE CASCADE;
+SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

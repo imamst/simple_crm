@@ -20,6 +20,9 @@
         .form-form .form-form-wrap form .field-wrapper svg.feather-eye {
             top: 46px;
         }
+        .login-agent-link {
+            margin-top: 0 !important;
+        }
     </style>
 </head>
 <body>

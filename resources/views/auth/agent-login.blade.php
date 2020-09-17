@@ -22,6 +22,7 @@
 
         <div class="form">
             @include('auth.login-form')
+            <p class="signup-link">Login as Landlord? <a href="{{url('login')}}">Click here</a></p>
         </div>
     </form>
 
