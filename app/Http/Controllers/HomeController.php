@@ -11,15 +11,6 @@ use App\User;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -29,37 +20,40 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $account_type_id = $user->accountType->id;
+        $table = $user->getTable();
 
-        if($account_type_id == 2)
+        if($table == "agents")
         {
             return $this->getAgentDashboard($user);
         }
-        elseif($account_type_id == 1)
+        elseif($table == "users")
         {
             return $this->getLandlordDashboard($user);
         }
     }
 
-    public function getAgentDashboard(User $user)
+    public function getAgentDashboard(Agent $user)
     {
-        $total_contracts = $user->agentContracts()->count();
-        $recent_contracts = $user->agentContracts()->latest()->limit(5)->get();
+        $total_contracts = $user->contracts()->count();
+        $recent_contracts = $user->contracts()->latest()->limit(5)->get();
 
         return view('agent.dashboard', compact('total_contracts','recent_contracts'));
     }
 
     public function getLandlordDashboard(User $user)
     {
-        $contracts = Contract::with(['landlord','tenant'])->whereNull('landlord_id')->orWhere('landlord_id',$user->id)->get();
-        $landlord_contracts_id = $user->landlordContracts()->get()->pluck('id');
+        $contracts = $user->contracts()->with(['agent','tenant'])->get();
+
+        $landlord_contracts_id = $user->contracts()->get()->pluck('id');
+
         $recent_tenants = Tenant::with(['contract'])
-                                ->whereIn('id', $landlord_contracts_id)
-                                ->whereNotNull('first_name')
+                                ->whereIn('contract_id', $landlord_contracts_id)
+                                ->where('data_status',2)
                                 ->latest()
                                 ->limit(5)
                                 ->get();
-        $total_tenants = Tenant::whereIn('id', $landlord_contracts_id)->whereNotNull('first_name')->get()->count();
+
+        $total_tenants = Tenant::whereIn('contract_id', $landlord_contracts_id)->where('data_status',2)->get()->count();
 
         return view('landlord.dashboard', compact('contracts','recent_tenants','total_tenants'));
     }

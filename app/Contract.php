@@ -15,7 +15,7 @@ class Contract extends Model
  
         //Generate and set UUID automatically for the user
         static::creating(function($user) {
-            $user->id = uniqid('cnt',true);
+            $user->id = uniqid('cst',true);
         });
     }
 
@@ -74,5 +74,10 @@ class Contract extends Model
     public function tenant()
     {
         return $this->hasOne('App\Tenant');
+    }
+
+    public function contractFiles()
+    {
+        return $this->hasMany('App\ContractFile');
     }
 }

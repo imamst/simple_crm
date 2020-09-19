@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AgentFormRequest extends FormRequest
 {
@@ -30,7 +31,9 @@ class AgentFormRequest extends FormRequest
                 'family_name' => ['required', 'string', 'max:191'],
                 'phone_number' => ['required', 'string', 'max:191'],
                 'address' => ['required', 'string', 'max:1000'],
-                'email' => ['required', 'string', 'email', 'max:191'],
+                'email' => ['required', 'string', 'email', 'max:191', Rule::unique('agents')->ignore($this->agent->national_id, 'national_id')],
+                'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+                'avatar' => ['nullable','file','mimetypes:image/*','max:1024'],
             ];
         }
 
@@ -42,6 +45,7 @@ class AgentFormRequest extends FormRequest
             'address' => ['required', 'string', 'max:1000'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:agents'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'avatar' => ['nullable','file','mimetypes:image/*','max:1024'],
         ];
     }
 

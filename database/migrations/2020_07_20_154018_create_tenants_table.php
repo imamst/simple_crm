@@ -29,7 +29,7 @@ class CreateTenantsTable extends Migration
             $table->char('contract_id', 36);
             $table->timestamps();
 
-            $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
+            $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -30,7 +30,7 @@ class Tenant extends Model
 
     protected function setIdAttribute($value)
     {
-        $this->attributes['id'] = preg_replace('/\./', '', uniqid('srm', true));
+        $this->attributes['id'] = preg_replace('/\./', '', uniqid('cst', true));
     }
 
     public function setIncomeAttribute($value)

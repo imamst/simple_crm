@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Http\Request;
 
 class AgentLoginController extends LoginController
 {
@@ -11,12 +12,13 @@ class AgentLoginController extends LoginController
 
     public function __construct()
     {
+        $this->middleware('guest')->except('logout');
         $this->middleware('guest:agent')->except('logout');
     }
 
-    protected function authenticated(Request $request, $agent)
+    protected function authenticated(Request $request)
     {
-        return view('auth.loggedin');
+        return redirect($this->redirectTo);
     }
 
     public function showLoginForm()

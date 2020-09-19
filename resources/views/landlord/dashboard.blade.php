@@ -51,13 +51,12 @@
                                     <th>Period</th>
                                     <th>Payment Term</th>
                                     <th>Status</th>
-                                    <th class="">Contract File</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($contracts as $contract)
                                     <tr>
-                                        <td>{{ $contract->contract_number }}</td>
+                                        <td><a class="text-secondary" href="{{route('tenants.show',$contract->tenant->id)}}">{{ $contract->contract_number }}</a></td>
                                         <td class="text-center">
                                             <a href="{{route('tenants.request', $contract->tenant->id)}}" data-toggle="tooltip" data-placement="top" title="Send Information Request to Customer">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation text-success"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
@@ -77,13 +76,6 @@
                                             <span class="ml-2 text-warning">Request Sent</span>
                                             @else
                                                 <span>-</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            @if($contract->contract_file != null)
-                                                <a target="_blank" href="{{asset('storage/'.$contract->contract_file)}}"><span class="badge badge-success">Download</span></a>
-                                            @else
-                                                <span class="text-warning">Unavailable</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -144,7 +136,7 @@
                                 <div class="item-timeline timeline-new">
                                     <div class="t-dot">
                                         {{-- <div style="background-image: url({{asset('storage/'.$tenant->photo)}}); background-size: cover; background-position: center"></div> --}}
-                                        <div class="t-warning">
+                                        <div class="t-success">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                         </div>
                                     </div>

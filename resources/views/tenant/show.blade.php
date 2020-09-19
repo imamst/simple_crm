@@ -5,6 +5,7 @@
 @endsection
 
 @section('styles')
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 <link href="{{asset('assets/css/users/user-profile.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -12,15 +13,15 @@
 <div class="layout-px-spacing">
 
     <div class="row layout-spacing">
-
+        
         <!-- Content -->
         <div class="col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing">
 
             <div class="user-profile layout-spacing">
                 <div class="widget-content widget-content-area">
-                    <div class="d-flex justify-content-between">
-                        <h3 class="">Info</h3>
-                        <a href="{{route('tenants.edit',$tenant->id)}}" class="mt-2 edit-profile" style="visibility: hidden;"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h3>Customer Info</h3>
+                        <a href="#" class="mt-2 edit-profile" style="visibility: hidden;"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
                     </div>
                     <div class="text-center user-info">
                         @if($tenant->photo != null)
@@ -96,10 +97,10 @@
                                 <td>Contract File</td>
                                 <td>:</td>
                                 <td>
-                                    @if($tenant->contract->contract_file)
-                                        <a href="{{asset('storage/'.$tenant->contract->contract_file)}}"><span class="badge badge-success">Download</span></a>
-                                    @else
-                                        <span class="text-danger">Unavailable</span>
+                                    @if($tenant->contract->contractFiles != null)
+                                        @foreach ($tenant->contract->contractFiles as $file)
+                                            <p><a class="link-icon" target="_blank" href="{{asset('storage/'.$file->file_path)}}">{{ $file->name }}</a><p>
+                                        @endforeach
                                     @endif
                                 </td>
                             </tr>

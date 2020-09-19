@@ -39,49 +39,38 @@
                                 <tr>
                                     <th>National ID</th>
                                     <th>Name</th>
+                                    <th>Action</th>
                                     <th>Email</th>
                                     <th>Phone Number</th>
                                     <th>Address</th>
-                                    <th>Total Contracts</th>
-                                    <th class="text-center">Action</th>
+                                    <th class="text-center">Total Contracts</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($agents as $agent)
                                     <tr>
-                                        <td>{{ $agent->national_id }}</td>
+                                        <td><a class="text-secondary" href="{{ route('agents.show',$agent->national_id) }}">{{ $agent->national_id }}</a></td>
                                         <td>
                                             <p class="align-self-center mb-0">{{ $agent->full_name }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex align-items-center">
+                                                <a href="{{route('agents.edit', $agent->national_id)}}" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-success"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                                </a>
+                                                <form action="{{route('agents.destroy',$agent->national_id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
                                         <td>{{ $agent->email }}</td>
                                         <td>{{ $agent->phone_number }}</td>
                                         <td>{{ $agent->address }}</td>
-                                        <td>{{ $agent->contracts()->count() }}</td>
-                                        <td class="text-center">
-                                            <div class="dropdown custom-dropdown">
-                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                </a>
-
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                                    <a class="dropdown-item" href="{{route('agents.show',$agent->national_id)}}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-secondary"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                        <span class="ml-2">View</span>
-                                                    </a>
-                                                    <a class="dropdown-item" href="{{route('agents.edit',$agent->national_id)}}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3 text-success"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                                                        <span class="ml-2">Edit</span>
-                                                    </a>
-                                                    <form action="{{route('agents.destroy',$agent->national_id)}}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="dropdown-item">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg> <span class="ml-2">Delete</span>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td class="text-center">{{ $agent->contracts()->count() }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -112,7 +101,7 @@
 
     multiCheck(c2);
 
-    $('.money').simpleMoneyFormat();
+    $('[data-toggle="tooltip"]').tooltip();
 
 </script>
 @endpush

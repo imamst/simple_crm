@@ -5,7 +5,11 @@
         <div class="profile-info">
             <figure class="user-cover-image" style="visibility: hidden;background:#fff;"></figure>
             <div class="user-info">
-                <img src="{{asset('storage/img/90x90.jpg')}}" alt="avatar">
+                @if(Auth::user()->avatar)
+                    <img src="{{asset('storage/'.Auth::user()->avatar)}}" width="90px" alt="avatar">
+                @else
+                    <img src="{{asset('storage/img/90x90.jpg')}}" alt="avatar">
+                @endif
                 <h6 class="">{{ Auth::user()->full_name }}</h6>
                 @auth('web')
                     <p class="text-capitalize">Landlord</p>
@@ -38,11 +42,11 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="agentMenu" data-parent="#accordionExample">
-                    <li>
+                <ul class="collapse submenu list-unstyled {{($menu == 'agents') ? 'show' : ''}}" id="agentMenu" data-parent="#accordionExample">
+                    <li class="{{ (($menu == 'agents') && ($submenu == '')) ? 'active' : ''}}">
                         <a href="{{route('agents.index')}}"> View All </a>
                     </li>
-                    <li>
+                    <li class="{{ (($menu == 'agents') && ($submenu == 'create')) ? 'active' : ''}}">
                         <a href="{{route('agents.create')}}"> Add New </a>
                     </li>
                 </ul>
@@ -79,11 +83,11 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="contractMenu" data-parent="#accordionExample">
-                    <li>
+                <ul class="collapse submenu list-unstyled {{($menu == 'contracts') ? 'show' : ''}}" id="contractMenu" data-parent="#accordionExample">
+                    <li class="{{ (($menu == 'contracts') && ($submenu == '')) ? 'active' : ''}}">
                         <a href="{{route('contracts.index')}}"> View All </a>
                     </li>
-                    <li>
+                    <li class="{{ (($menu == 'contracts') && ($submenu == 'create')) ? 'active' : ''}}">
                         <a href="{{route('contracts.create')}}"> Add New </a>
                     </li>
                 </ul>

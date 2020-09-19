@@ -11,3 +11,59 @@
     color: #000;
     font-weight: bold;
 }
+
+.table > tbody > tr > td .usr-img-frame.rounded-circle {
+    background-color: transparent;
+    padding: 0;
+    width: 50px;
+    height: 35px;
+}
+
+.contract-file-wrapper {
+    overflow-wrap: break-word;
+}
+
+a.link-icon:before,
+a.link-icon.link-file[href]:before {
+    content: "\f15b"; /* generic file icon */
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+    width: 20px;
+    text-align: right;
+	margin-right: 10px;
+	font-family: "Font Awesome\ 5 Free";
+	font-style: normal;
+	font-weight: 900;
+	color: #C6E4F8;
+}
+
+a[href$=".pdf"].link-icon:before,
+a.link-icon.link-pdf[href]:before {
+	content: "\f1c1"; /*PDF*/
+	color: #EB1C26;
+}
+
+a[href$=".gif"].link-icon:before,
+a[href$=".jpg"].link-icon:before,
+a[href$=".jpeg"].link-icon:before,
+a[href$=".png"].link-icon:before,
+a[href$=".bmp"].link-icon:before,
+a[href$=".tif"].link-icon:before,
+a.link-icon.link-image[href]:before {
+	content: "\f1c5"; /*Image*/
+	color: #FCBE0E;
+}
+
+a.icon-lg[href]:before {
+    font-size: 2rem;
+}
+
+.widget-activity-three .timeline-line .item-timeline .t-dot div.t-success {
+    background-color: #8dbf42;
+    box-shadow: 0 10px 20px -10px #8dbf42;
+}

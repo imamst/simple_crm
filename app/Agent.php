@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class Agent extends Authenticatable
 {
@@ -27,6 +28,11 @@ class Agent extends Authenticatable
         $this->attributes['family_name'] = ucwords($value);
     }
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->family_name}";
@@ -39,6 +45,6 @@ class Agent extends Authenticatable
 
     public function contracts()
     {
-        return $this->hasMany('App\Contract');
+        return $this->hasMany('App\Contract')->with(['landlord','tenant']);
     }
 }

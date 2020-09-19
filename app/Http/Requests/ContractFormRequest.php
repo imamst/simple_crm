@@ -34,7 +34,7 @@ class ContractFormRequest extends FormRequest
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'payment_term' => 'required|string|max:191',
-            'contract_file' => 'nullable|file|mimes:pdf|max:10000',
+            'contract_file.*' => 'required|file|mimetypes:application/pdf,image/*|max:10000',
         ];
     }
 

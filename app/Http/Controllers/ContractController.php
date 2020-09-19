@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Contract;
 use App\Tenant;
+use App\ContractFile;
 use App\Http\Requests\ContractFormRequest;
 use App\Traits\FileUploadTrait;
 use App\Traits\RandomStringTrait;
@@ -19,7 +20,7 @@ class ContractController extends Controller
 
     public function index()
     {
-        $contracts = Contract::with(['landlord','tenant'])->where('agent_national_id',Auth::id())->get();
+        $contracts = Auth::user()->contracts;
 
         return view('contract.index', compact('contracts'));
     }
@@ -32,9 +33,8 @@ class ContractController extends Controller
     public function store(ContractFormRequest $request)
     {
         $data = $request->validated();
-        $contract_path = $this->getContractUploadedPath($request);
 
-        $new_contract = Contract::create([
+        $contract = Contract::create([
             'agent_national_id' => Auth::id(),
             'landlord_national_id' => Auth::user()->landlord_national_id,
             'contract_number' => $data['contract_number'],
@@ -42,28 +42,52 @@ class ContractController extends Controller
             'start_date' => $data['start_date'],
             'end_date' => $data['end_date'],
             'payment_term' => $data['payment_term'],
-            'contract_file' => $contract_path,
         ]);
 
-        $token = $this->generateToken(16);
+        $this->storeTenant($data, $contract);
 
-        $new_contract->tenant()->create([
-            'first_name' => $data['tenant_first_name'],
-            'family_name' => $data['tenant_family_name'],
-            'email' => $data['tenant_email'],
-            'filling_form_token' => $token,
-            'contract_id' => $new_contract->id,
-        ]);
+        if(isset($data['contract_file']))
+        {
+            $this->storeContractFile($data['contract_file'], $contract);
+        }
 
         $this->sendNewContractNotification($data);
 
         return redirect('contracts')->with(['success' => 'Contract data successfully added']);
     }
 
-    // public function show(Contract $contract)
-    // {
-    //     return view('contract.show', compact('contract'));
-    // }
+    public function storeTenant($data, Contract $contract)
+    {
+        $token = $this->generateToken(16);
+
+        $contract->tenant()->create([
+            'first_name' => $data['tenant_first_name'],
+            'family_name' => $data['tenant_family_name'],
+            'email' => $data['tenant_email'],
+            'filling_form_token' => $token
+        ]);
+    }
+    
+    public function storeContractFile($contract_files, Contract $contract)
+    {
+        foreach($contract_files as $file)
+        {
+            $ext = $file->extension();
+            $original_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $name = $original_name.'-'.uniqid().'.'.$ext;
+            $path = $file->storeAs('uploads/contracts', $name);
+
+            $contract->contractFiles()->create([
+                'name' => $original_name,
+                'file_path' => $path
+            ]);
+        }
+    }
+
+    public function show(Contract $contract)
+    {
+        return view('contract.show', compact('contract'));
+    }
 
     public function edit(Contract $contract)
     {
@@ -73,12 +97,11 @@ class ContractController extends Controller
     public function update(ContractFormRequest $request, Contract $contract)
     {
         $data = $request->validated();
-        $contract_path = $contract->contract_file;
 
-        if(isset($request->validated()['contract_file']))
+        if(isset($data['contract_file']))
         {
-            Storage::delete($contract->contract_file);
-            $contract_path = $this->getContractUploadedPath($request);
+            $this->destroyContractFile($contract);
+            $this->storeContractFile($data['contract_file'], $contract);
         }
 
         $contract->update([
@@ -87,7 +110,6 @@ class ContractController extends Controller
             'start_date' => $data['start_date'],
             'end_date' => $data['end_date'],
             'payment_term' => $data['payment_term'],
-            'contract_file' => $contract_path,
         ]);
 
         $contract->tenant()->update([
@@ -101,11 +123,19 @@ class ContractController extends Controller
 
     public function destroy(Contract $contract)
     {
-        $contract_path = $contract->contract_file;
-        Storage::delete($contract_path);
+        $this->destroyContractFile($contract);
         $contract->delete();
 
         return redirect('contracts')->with(['success' => 'Contract data successfully deleted']);
+    }
+
+    public function destroyContractFile(Contract $contract)
+    {
+        $contract_files = $contract->contractFiles;
+        $contract_files_path = $contract_files->pluck('file_path')->toArray();
+        Storage::delete(array_filter($contract_files_path));
+
+        ContractFile::whereIn('id', $contract_files->pluck('id')->toArray())->delete();
     }
 
     public function sendNewContractNotification($data)

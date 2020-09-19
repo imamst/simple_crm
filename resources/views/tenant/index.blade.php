@@ -43,45 +43,32 @@
                                     <th>Profession</th>
                                     <th>Company</th>
                                     <th>Income / Year</th>
-                                    <th>Contract no.</th>
-                                    <th class="text-center">Action</th>
+                                    <th class="text-center">Contract no.</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($tenants as $tenant)
                                     <tr>
                                         <td>
-                                            <div class="d-flex">
-                                                <div class="usr-img-frame mr-2 rounded-circle">
-                                                    @if($tenant->photo != null)
-                                                        <img alt="avatar" class="img-fluid rounded-circle" src="{{asset('storage/'.$tenant->photo)}}">
-                                                    @else
-                                                        <img alt="avatar" class="img-fluid rounded-circle" src="{{asset('storage/img/90x90.jpg')}}">
-                                                    @endif
+                                            <a href="{{route('tenants.show', $tenant->id)}}">
+                                                <div class="d-flex">
+                                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                                        @if($tenant->photo != null)
+                                                            <img alt="avatar" class="img-fluid rounded-circle" src="{{asset('storage/'.$tenant->photo)}}">
+                                                        @else
+                                                            <img alt="avatar" class="img-fluid rounded-circle" src="{{asset('storage/img/90x90.jpg')}}">
+                                                        @endif
+                                                    </div>
+                                                    <p class="align-self-center mb-0 text-secondary">{{ $tenant->full_name }}</p>
                                                 </div>
-                                                <p class="align-self-center mb-0">{{ $tenant->full_name }}</p>
-                                            </div>
+                                            </a>
                                         </td>
                                         <td>{{ $tenant->email }}</td>
                                         <td>{{ $tenant->phone_number }}</td>
                                         <td>{{ $tenant->profession }}</td>
                                         <td>{{ $tenant->company }}</td>
                                         <td>SAR <span class="money">{{ $tenant->income }}</span></td>
-                                        <td>{{ $tenant->contract->contract_number }}</td>
-                                        <td class="text-center">
-                                            <div class="dropdown custom-dropdown">
-                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                </a>
-
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                                    <a class="dropdown-item" href="{{route('tenants.show',$tenant->id)}}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-secondary"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                        <span class="ml-2">View</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td class="text-center">{{ $tenant->contract->contract_number }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -9,7 +9,7 @@
 </div>
 <div class="form-group mb-4">
     <label class="control-label">Customer First Name <span class="text-danger">*</span></label>
-    <input type="text" name="tenant_first_name" class="form-control" value="{{ $contract->tenant->first_name ?? old('first_name') ?? null }}" required>
+    <input type="text" name="tenant_first_name" class="form-control" value="{{ $contract->tenant->first_name ?? old('tenant_first_name') ?? null }}" required>
     @error('tenant_first_name')
         <span class="invalid-feedback d-block">
             <strong>{{ $message }}</strong>
@@ -19,7 +19,7 @@
 
 <div class="form-group mb-4">
     <label class="control-label">Customer Family Name <span class="text-danger">*</span></label>
-    <input type="text" name="tenant_family_name" class="form-control" value="{{ $contract->tenant->family_name ?? old('family_name') ?? null }}" required>
+    <input type="text" name="tenant_family_name" class="form-control" value="{{ $contract->tenant->family_name ?? old('tenant_family_name') ?? null }}" required>
     @error('tenant_family_name')
         <span class="invalid-feedback d-block">
             <strong>{{ $message }}</strong>
@@ -122,20 +122,36 @@
     @enderror
 </div>
 <div class="form-group mb-4 custom-file-container" data-upload-id="contractFile">
-    <label>Upload Contract File (.pdf) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear File">x</a></label>
-    <label class="custom-file-container__custom-file">
-        <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="application/pdf" name="contract_file">
-        <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-        <span class="custom-file-container__custom-file__custom-file-control"></span>
-    </label>
+    <label>Upload Contract File (Allow Multiple: pdf, image) <span class="text-danger">*</span> <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear File">x</a></label>
+    @if(isset($contract))
+        <p class="text-danger">*Uploading new file(s) will replace existing contract file(s)</p>
+        <label class="custom-file-container__custom-file">
+            <input type="file" class="custom-file-container__custom-file__custom-file-input" accept=".pdf, image/*" name="contract_file[]" multiple>
+            <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+            <span class="custom-file-container__custom-file__custom-file-control"></span>
+        </label>
+    @else
+        <label class="custom-file-container__custom-file">
+            <input type="file" class="custom-file-container__custom-file__custom-file-input" accept=".pdf, image/*" name="contract_file[]" required multiple>
+            <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+            <span class="custom-file-container__custom-file__custom-file-control"></span>
+        </label>
+    @endif
     @error('contract_file')
         <span class="invalid-feedback d-block">
             <strong>{{ $message }}</strong>
         </span>
     @enderror
     @if(isset($contract))
-        @if($contract->contract_file != null)
-            <a class="mt-3" target="_blank" href="{{asset('storage/'.$contract->contract_file)}}"><span class="badge badge-success">Contract FIle Available</span></a>
+        @if($contract->contractFiles != null)
+            <p class="mt-4 font-weight-bold">Uploaded File:</p>
+            <div class="row">
+                @foreach ($contract->contractFiles as $file)
+                    <div class="col-md-2 col-12 text-center contract-file-wrapper">
+                        <a class="link-icon icon-lg" target="_blank" href="{{asset('storage/'.$file->file_path)}}"><p>{{ $file->name }}</p></a>
+                    </div>
+                @endforeach
+            </div>
         @endif
     @endif
     <div class="custom-file-container__image-preview"></div>

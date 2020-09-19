@@ -4,6 +4,10 @@
     Dashboard
 @endsection
 
+@section('styles')
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+@endsection
+
 @section('content')
 <div class="layout-px-spacing">
     <div class="row layout-top-spacing">
@@ -57,17 +61,22 @@
                                 @foreach($recent_contracts as $contract)
                                 <div class="item-timeline timeline-new">
                                     <div class="t-dot">
-                                        <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></div>
+                                        <div class="t-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></div>
                                     </div>
                                     <div class="t-content">
                                         <div class="t-uppercontent">
-                                            <h5>Contract No. {{ $contract->contract_number }}</h5>
+                                            <h5><a class="text-success" href="{{ route('contracts.show',$contract->id) }}">Contract No. {{ $contract->contract_number }}</a></h5>
                                             <span class="">Created: {{ $contract->input_date }}</span>
                                         </div>
                                         <p>Customer: {{ $contract->tenant->full_name }}</p>
                                         <p>Rent Duration: {{ $contract->rent_duration }}</p>
+                                        <p>Contract Files: </p>
                                         <div class="tags">
-                                            <div class="badge badge-success"><a href="{{ asset('storage/'.$contract->contract_file) }}">Contract File</a></div>
+                                            @if($contract->contractFiles != null)
+                                                @foreach ($contract->contractFiles as $file)
+                                                    <p><a class="link-icon" target="_blank" href="{{asset('storage/'.$file->file_path)}}">{{ $file->name }}</a><p>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

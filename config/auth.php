@@ -107,7 +107,7 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'users' => [
+        'agents' => [
             'provider' => 'agents',
             'table' => 'password_resets',
             'expire' => 60,

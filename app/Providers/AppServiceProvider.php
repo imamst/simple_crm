@@ -29,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
 
         $menu = '';
         $menu = Request::segment(1);
+
+        $submenu = '';
+        $submenu = Request::segment(2);
+
         view()->share('menu',$menu);
+        view()->share('submenu',$submenu);
     }
 }

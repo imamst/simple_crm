@@ -60,5 +60,7 @@
     });
 
     multiCheck(c2);
+
+    $('[data-toggle="tooltip"]').tooltip();
 </script>
 @endpush

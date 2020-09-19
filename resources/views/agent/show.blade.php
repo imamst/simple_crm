@@ -5,6 +5,7 @@
 @endsection
 
 @section('styles')
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 <link href="{{asset('assets/css/users/user-profile.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -19,8 +20,8 @@
             <div class="user-profile layout-spacing">
                 <div class="widget-content widget-content-area">
                     <div class="d-flex justify-content-between">
-                        <h3 class="">Info</h3>
-                        <a href="{{route('agents.edit',$agent->national_id)}}" class="mt-2 edit-profile" style="visibility: hidden;"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
+                        <h3 class="">Agent Info</h3>
+                        <a href="{{route('agents.edit',$agent->national_id)}}" class="mt-2 edit-profile"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
                     </div>
                     <div class="text-center user-info">
                         @if($agent->photo != null)
@@ -69,7 +70,7 @@
                             @foreach($recent_contracts as $contract)
                             <div class="item-timeline timeline-new">
                                 <div class="t-dot">
-                                    <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></div>
+                                    <div class="t-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></div>
                                 </div>
                                 <div class="t-content">
                                     <div class="t-uppercontent">
@@ -78,8 +79,13 @@
                                     </div>
                                     <p>Customer Name: {{ $contract->tenant->full_name }}</p>
                                     <p>Rent Duration: {{ $contract->rent_duration }}</p>
+                                    <p>Contract Files: </p>
                                     <div class="tags">
-                                        <div class="badge badge-success"><a href="{{ asset('storage/'.$contract->contract_file) }}">Contract File</a></div>
+                                        @if($contract->contractFiles != null)
+                                            @foreach ($contract->contractFiles as $file)
+                                                <p><a class="link-icon" target="_blank" href="{{asset('storage/'.$file->file_path)}}">{{ $file->name }}</a><p>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>
