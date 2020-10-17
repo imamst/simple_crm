@@ -5,12 +5,12 @@
 @endsection
 
 @section('content')
-@if (session('status'))
-    <div class="alert alert-success" role="alert">
+<div class="form-content mt-2">
+    @if (session('status'))
+    <div class="alert alert-success mb-3" role="alert">
         {{ session('status') }}
     </div>
-@endif
-<div class="form-content mt-2">
+    @endif
     <h1 class="">{{ __('Reset Password') }}</h1>
     <p class="signup-link recovery">Enter your email and instructions will sent to you!</p>
     <form class="text-left" action="{{ route('password.email') }}" method="POST">

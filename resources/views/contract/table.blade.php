@@ -3,14 +3,14 @@
         <tr>
             <th>Contract no.</th>
             <th>Customer Name</th>
-            @auth('agent')
-                <th class="text-center">Action</th>
-            @endauth
             <th>Customer Email</th>
             <th>Landlord</th>
             <th>Duration</th>
             <th>Period</th>
             <th class="text-center">Payment Term</th>
+            @auth('agent')
+                <th class="text-center">Action</th>
+            @endauth
         </tr>
     </thead>
     <tbody>
@@ -18,6 +18,11 @@
             <tr>
                 <td><a class="text-secondary" href="{{ route('contracts.show', $contract->id) }}">{{ $contract->contract_number }}</a></td>
                 <td class="user-name">{{ $contract->tenant->full_name }}</td>
+                <td class="user-name">{{ $contract->tenant->email }}</td>
+                <td class="user-name">{{ $contract->landlord->full_name }}</td>
+                <td>{{ $contract->rent_duration }}</td>
+                <td>{{ $contract->period }}</td>
+                <td class="text-center"><span class="text-capitalize">{{ $contract->payment_term }}</span></td>
                 @auth('agent')
                     <td class="text-center">
                         <div class="d-flex align-items-center">
@@ -34,11 +39,6 @@
                         </div>
                     </td>
                 @endauth
-                <td class="user-name">{{ $contract->tenant->email }}</td>
-                <td class="user-name">{{ $contract->landlord->full_name }}</td>
-                <td>{{ $contract->rent_duration }}</td>
-                <td>{{ $contract->period }}</td>
-                <td class="text-center"><span class="text-capitalize">{{ $contract->payment_term }}</span></td>
             </tr>
         @endforeach
     </tbody>

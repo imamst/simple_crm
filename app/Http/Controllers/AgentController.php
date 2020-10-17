@@ -36,7 +36,7 @@ class AgentController extends Controller
             'phone_number' => $data['phone_number'],
             'address' => $data['address'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+            'password' => $data['password']
         ]);
 
         $this->notifyAgent($data);

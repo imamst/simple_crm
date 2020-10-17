@@ -44,24 +44,19 @@
                             <thead>
                                 <tr>
                                     <th>Contract no.</th>
-                                    <th class="text-center">Action</th>
                                     <th>Customer Email</th>
                                     <th>Agent</th>
                                     <th>Duration</th>
                                     <th>Period</th>
                                     <th>Payment Term</th>
                                     <th>Status</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($contracts as $contract)
                                     <tr>
                                         <td><a class="text-secondary" href="{{route('tenants.show',$contract->tenant->id)}}">{{ $contract->contract_number }}</a></td>
-                                        <td class="text-center">
-                                            <a href="{{route('tenants.request', $contract->tenant->id)}}" data-toggle="tooltip" data-placement="top" title="Send Information Request to Customer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation text-success"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-                                            </a>
-                                        </td>
                                         <td class="user-name">{{ $contract->tenant->email }}</td>
                                         <td class="user-name">{{ $contract->agent->full_name }}</td>
                                         <td>{{ $contract->rent_duration }}</td>
@@ -77,6 +72,11 @@
                                             @else
                                                 <span>-</span>
                                             @endif
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{route('tenants.request', $contract->tenant->id)}}" data-toggle="tooltip" data-placement="top" title="Send Information Request to Customer">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation text-success"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

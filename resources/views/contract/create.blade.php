@@ -7,7 +7,7 @@
 @section('styles')
 <link href="{{asset('plugins/flatpickr/flatpickr.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('plugins/flatpickr/custom-flatpickr.css')}}" rel="stylesheet" type="text/css">
-<link href="{{asset('plugins/file-upload/file-upload-with-preview.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -39,10 +39,10 @@
 @push('scripts')
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <script src="{{asset('plugins/flatpickr/flatpickr.js')}}"></script>
-<script src="{{asset('plugins/file-upload/file-upload-with-preview.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
 <script>
     var f1 = flatpickr(document.getElementById('startDatepicker'));
     var f2 = flatpickr(document.getElementById('endDatepicker'));
-    var contractUpload = new FileUploadWithPreview('contractFile');
 </script>
 @endpush

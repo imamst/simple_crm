@@ -121,21 +121,13 @@
         </span>
     @enderror
 </div>
-<div class="form-group mb-4 custom-file-container" data-upload-id="contractFile">
-    <label>Upload Contract File (Allow Multiple: pdf, image) <span class="text-danger">*</span> <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear File">x</a></label>
+<div class="form-group mb-4 custom-file-container">
+    <label>Upload Contract File (Allow Multiple: pdf, image) <span class="text-danger">*</span> </label>
     @if(isset($contract))
         <p class="text-danger">*Uploading new file(s) will replace existing contract file(s)</p>
-        <label class="custom-file-container__custom-file">
-            <input type="file" class="custom-file-container__custom-file__custom-file-input" accept=".pdf, image/*" name="contract_file[]" multiple>
-            <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-            <span class="custom-file-container__custom-file__custom-file-control"></span>
-        </label>
+        <input id="contractFilesInput" name="contract_file[]" type="file" class="file" data-preview-file-type="text" multiple data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {files} for upload...">
     @else
-        <label class="custom-file-container__custom-file">
-            <input type="file" class="custom-file-container__custom-file__custom-file-input" accept=".pdf, image/*" name="contract_file[]" required multiple>
-            <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-            <span class="custom-file-container__custom-file__custom-file-control"></span>
-        </label>
+        <input id="contractFilesInput" name="contract_file[]" type="file" class="file" data-preview-file-type="text" multiple data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {files} for upload...">
     @endif
     @error('contract_file')
         <span class="invalid-feedback d-block">

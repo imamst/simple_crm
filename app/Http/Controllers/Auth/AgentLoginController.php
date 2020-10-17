@@ -21,11 +21,6 @@ class AgentLoginController extends LoginController
         return redirect($this->redirectTo);
     }
 
-    public function showLoginForm()
-    {
-        return view('auth.agent-login');
-    }
-
     public function username()
     {
         return 'email';

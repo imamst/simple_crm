@@ -17,13 +17,9 @@ Route::get('/', function () {
     return redirect('login');
 })->middleware(['guest', 'guest:agent']);
 
-Route::get('login', 'Auth\LoginController@showLoginForm');
-// Route::get('login/agent', 'Auth\AgentLoginController@showLoginForm');
 Route::post('login/agent', 'Auth\AgentLoginController@login')->name('login.agent');
 
-Auth::routes(['register' => false]);
-Route::get('register', 'Auth\RegisterController@showRegistrationForm');
-Route::post('register', 'Auth\RegisterController@register')->name('register');
+Auth::routes();
 
 Route::prefix('tenants')->group(function () {
     Route::get('/{token}/edit', 'TenantController@edit')->name('tenants.edit');

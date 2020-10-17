@@ -39,11 +39,11 @@
                                 <tr>
                                     <th>National ID</th>
                                     <th>Name</th>
-                                    <th>Action</th>
                                     <th>Email</th>
                                     <th>Phone Number</th>
                                     <th>Address</th>
-                                    <th class="text-center">Total Contracts</th>
+                                    <th>Total Contracts</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,6 +53,10 @@
                                         <td>
                                             <p class="align-self-center mb-0">{{ $agent->full_name }}</p>
                                         </td>
+                                        <td>{{ $agent->email }}</td>
+                                        <td>{{ $agent->phone_number }}</td>
+                                        <td>{{ $agent->address }}</td>
+                                        <td>{{ $agent->contracts()->count() }}</td>
                                         <td class="text-center">
                                             <div class="d-flex align-items-center">
                                                 <a href="{{route('agents.edit', $agent->national_id)}}" data-toggle="tooltip" data-placement="top" title="Edit">
@@ -67,10 +71,6 @@
                                                 </form>
                                             </div>
                                         </td>
-                                        <td>{{ $agent->email }}</td>
-                                        <td>{{ $agent->phone_number }}</td>
-                                        <td>{{ $agent->address }}</td>
-                                        <td class="text-center">{{ $agent->contracts()->count() }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
